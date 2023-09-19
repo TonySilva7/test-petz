@@ -1,10 +1,8 @@
-import * as F from '@/@redux/features';
 import Head from 'next/head';
-import * as S from '@/@redux/store';
+
+import { ViewUser } from '@/components/ViewUser';
 
 export default function Home() {
-  const { user } = S.useAppSelector(F.USER.selectUsers);
-  const dispatch = S.useAppDispatch();
   return (
     <>
       <Head>
@@ -13,10 +11,7 @@ export default function Home() {
         <meta name="viewport" content="width=device-width, initial-scale=1" />
         <link rel="icon" href="/favicon.ico" />
       </Head>
-      <main>
-        <h1>Hello {user.name}</h1>
-        <button onClick={() => dispatch(F.USER.resetUsers())}>Clique-me</button>
-      </main>
+      <ViewUser />
     </>
   );
 }

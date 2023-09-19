@@ -34,7 +34,7 @@ export const userSlice = createSlice({
     resetUsers: (state) => {
       state.status = 'idle';
       state.user.id = 0;
-      state.user.name = 'Tony Mudou';
+      state.user.name = 'Tony';
       state.user.email = '';
       state.user.avatarUrl = '';
     },

@@ -4,7 +4,7 @@ const userModel: T.IUserState = {
   user: {
     avatarUrl: '',
     email: '',
-    name: 'Tony',
+    name: '',
     id: 0,
   },
   status: 'idle',

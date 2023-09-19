@@ -28,3 +28,4 @@ export type AppThunk<ReturnType = void> = ThunkAction<
   Action<string>
 >;
 export * from './hooks';
+export * from '../test-util';
