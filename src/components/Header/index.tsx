@@ -1,12 +1,16 @@
 import { ComponentProps } from 'react';
+import { HeaderBottom } from './HeaderBottom';
+import { HeaderTop } from './HeaderTop';
+import { HeaderWrapper } from './styles';
 
 type HeaderProps = ComponentProps<'div'>;
 
 function Header({ ...props }: HeaderProps) {
   return (
-    <div {...props}>
-      <h1> Hello Header</h1>
-    </div>
+    <HeaderWrapper {...props}>
+      <HeaderTop />
+      <HeaderBottom />
+    </HeaderWrapper>
   );
 }
 

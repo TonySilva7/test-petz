@@ -6,9 +6,9 @@ import React, { PropsWithChildren } from 'react';
 import { Provider } from 'react-redux';
 
 import { setupStore, type AppStore, type RootState } from '@/@redux/store';
-import { ThemeProvider } from 'styled-components';
+import { GlobalStyle } from '@/styles/GlobalStyle';
 import { theme } from '@/styles/theme';
-import { GlobalStyles } from '@/styles/global-styles';
+import { ThemeProvider } from 'styled-components';
 
 /**
  * This type interface extends the default options for render from RTL, as well
@@ -33,7 +33,7 @@ export function renderWithProviders(
   function Wrapper({ children }: PropsWithChildren<object>): JSX.Element {
     return (
       <Provider store={store}>
-        <GlobalStyles />
+        <GlobalStyle />
         <ThemeProvider theme={theme}>{children}</ThemeProvider>
       </Provider>
     );
