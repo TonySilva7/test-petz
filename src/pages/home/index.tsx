@@ -7,7 +7,7 @@ export default function Home({ ...props }: HomeProps) {
   return (
     <div {...props}>
       <h1>Hello Home</h1>
-      <Link href="/">Raiz</Link>
+      <Link href="/about">Sobre</Link>
     </div>
   );
 }
