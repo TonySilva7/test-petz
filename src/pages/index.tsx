@@ -1,6 +1,7 @@
 import Head from 'next/head';
 
-import { ViewUser } from '@/components/ViewUser';
+import { ViewUser } from '@/components/User';
+import Link from 'next/link';
 
 export default function Home() {
   return (
@@ -12,6 +13,8 @@ export default function Home() {
         <link rel="icon" href="/favicon.ico" />
       </Head>
       <ViewUser />
+
+      <Link href="/home">Home</Link>
     </>
   );
 }

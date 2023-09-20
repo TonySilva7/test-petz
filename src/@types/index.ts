@@ -1,3 +1,4 @@
-import { IUser, IUserState } from './user';
+import { IUserState } from './user';
+import { IStatusRequest } from './api';
 
-export type { IUser, IUserState };
+export type { IUserState, IStatusRequest };

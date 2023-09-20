@@ -9,7 +9,9 @@ export default function App({ Component, pageProps }: AppProps) {
     <ProviderRedux>
       <ThemeProvider theme={theme}>
         <GlobalStyles />
+        <header>Meu Header</header>
         <Component {...pageProps} />
+        <footer>Meu Footer</footer>
       </ThemeProvider>
     </ProviderRedux>
   );

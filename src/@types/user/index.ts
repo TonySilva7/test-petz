@@ -1,13 +1,9 @@
-type IUser = {
-  id: number;
-  name: string;
-  email: string;
-  avatarUrl: string;
-};
+import * as Model from '@/domain';
+import { IStatusRequest } from '../api';
 
 type IUserState = {
-  status: 'idle' | 'pending' | 'success' | 'error';
-  user: IUser;
+  user: Model.IUser;
+  status: IStatusRequest;
 };
 
-export type { IUser, IUserState };
+export type { IUserState };

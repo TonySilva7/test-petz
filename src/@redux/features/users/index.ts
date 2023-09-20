@@ -1,7 +1,7 @@
 import * as T from '@/@types';
 import { RootState } from '@/@redux/store';
-import * as M from '@/model';
-import { USER } from '@/services';
+import * as M from '@/domain';
+import { USER } from '@/api';
 import {
   ActionReducerMapBuilder,
   PayloadAction,
@@ -10,7 +10,10 @@ import {
 } from '@reduxjs/toolkit';
 import { AxiosResponse } from 'axios';
 
-const initialState: T.IUserState = M.userModel;
+const initialState: T.IUserState = {
+  user: M.user,
+  status: 'idle',
+};
 
 export const handleGetUserByName = createAsyncThunk(
   'users/getByName',
@@ -19,7 +22,7 @@ export const handleGetUserByName = createAsyncThunk(
       const response: AxiosResponse = await USER.users.getUserByName({
         name,
       });
-      return response.data as T.IUser;
+      return response.data as T.IUserState;
     } catch (error) {
       return rejectWithValue(error);
     }
@@ -43,16 +46,16 @@ export const userSlice = createSlice({
   extraReducers: (builder: ActionReducerMapBuilder<T.IUserState>) => {
     builder
       .addCase(handleGetUserByName.pending, (state) => {
-        state.status = 'pending';
+        state.status = 'loading';
       })
       .addCase(
         handleGetUserByName.fulfilled,
-        (state, action: PayloadAction<T.IUser>) => {
+        (state, action: PayloadAction<T.IUserState>) => {
           state.status = 'success';
-          state.user.id = action.payload.id;
-          state.user.email = action.payload.email;
-          state.user.name = action.payload.name;
-          state.user.avatarUrl = action.payload.avatarUrl;
+          state.user.id = action.payload.user.id;
+          state.user.email = action.payload.user.email;
+          state.user.name = action.payload.user.name;
+          state.user.avatarUrl = action.payload.user.avatarUrl;
         },
       )
       .addCase(handleGetUserByName.rejected, (state) => {
