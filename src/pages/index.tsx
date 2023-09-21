@@ -1,9 +1,20 @@
 import Head from 'next/head';
 
-import { ViewUser } from '@/components/User';
-import Link from 'next/link';
+import { STYLES } from '@/@redux/features';
+import * as S from '@/@redux/store';
+import { HomePage } from '@/containers/HomePage';
+import { useEffect } from 'react';
 
 export default function Home() {
+  const dispatch = S.useAppDispatch();
+
+  useEffect(() => {
+    dispatch(STYLES.shrinkHomeButton({ isLoadingHome: true }));
+    setTimeout(() => {
+      dispatch(STYLES.shrinkHomeButton({ isLoadingHome: false }));
+    }, 5000);
+  }, [dispatch]);
+
   return (
     <>
       <Head>
@@ -13,9 +24,7 @@ export default function Home() {
         <link rel="icon" href="/favicon.ico" />
       </Head>
 
-      <ViewUser />
-
-      <Link href="/home">Home</Link>
+      <HomePage />
     </>
   );
 }

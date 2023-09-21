@@ -1,5 +1,5 @@
-import React, { useState, useEffect } from 'react';
 import { useRouter } from 'next/router';
+import { useEffect, useState } from 'react';
 import { BreadCrumbWrapper } from './styles';
 
 function Breadcrumbs() {
@@ -8,24 +8,37 @@ function Breadcrumbs() {
     { path: string; label: string }[]
   >([]);
 
+  const handleLabel = (segment: string) => {
+    const routes = {
+      about: 'Quem Somos',
+      schedule: 'Agendar Consulta',
+    };
+
+    const keyRoutes = segment as keyof typeof routes;
+
+    const labelFormatted = routes[keyRoutes].replace(/^./, (match) =>
+      match.toUpperCase(),
+    );
+
+    return labelFormatted;
+  };
+
   useEffect(() => {
     const updateBreadcrumbs = () => {
       const segments = router.asPath
         .split('/')
         .filter((segment) => segment !== '');
 
-      const breadcrumbItems =
-        segments.length === 0
-          ? []
-          : [
-              { path: '/', label: 'Home' },
-              ...segments.map((segment, index) => {
-                const breadcrumbPath = `/${segments
-                  .slice(0, index + 1)
-                  .join('/')}`;
-                return { path: breadcrumbPath, label: segment };
-              }),
-            ];
+      const breadcrumbItems = [
+        { path: '/', label: 'Home' },
+        ...segments.map((segment, index) => {
+          const breadcrumbPath = `/${segments.slice(0, index + 1).join('/')}`;
+          return {
+            path: breadcrumbPath,
+            label: handleLabel(segment),
+          };
+        }),
+      ];
 
       setBreadcrumbs(breadcrumbItems);
     };

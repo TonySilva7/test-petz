@@ -11,12 +11,13 @@ export const GlobalStyle = createGlobalStyle`
     font-size: 62.5%;
     background: ${({ theme }) => theme.colors.white};
 
-    body {
+    body, #__next {
       display: flex;
       align-items: center;
       flex-direction: column;
       width: 100%;
-      font-family: 'Jost', 'Poppins', 'Roboto', sans-serif;
+      min-height: 100vh;
+      font-family: 'Inter', 'Roboto', sans-serif;
       color: ${({ theme }) => theme.colors.lightBlack};
       -webkit-font-smoothing: antialiased;
       -moz-osx-font-smoothing: grayscale;

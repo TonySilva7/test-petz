@@ -1,4 +1,5 @@
 import usersSlice from '../features/users';
+import stylesSlice from '../features/styles';
 import {
   Action,
   combineReducers,
@@ -9,6 +10,7 @@ import {
 
 const rootReducer = combineReducers({
   userReducer: usersSlice,
+  stylesReducer: stylesSlice,
 });
 
 export type RootState = ReturnType<typeof rootReducer>;

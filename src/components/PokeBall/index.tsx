@@ -1,12 +1,12 @@
-import { ComponentProps } from 'react';
+import React, { ComponentProps } from 'react';
 
 type PokeBallProps = ComponentProps<'svg'>;
 
-function PokeBall({ ...props }: PokeBallProps) {
+const PokeBall: React.FC<PokeBallProps | undefined> = ({ ...props }) => {
   return (
     <svg
       width="37"
-      height="34"
+      height="37"
       viewBox="0 0 37 34"
       fill="none"
       xmlns="http://www.w3.org/2000/svg"
@@ -18,6 +18,6 @@ function PokeBall({ ...props }: PokeBallProps) {
       <circle cx="19.5" cy="17.5" r="4.5" fill="white" />
     </svg>
   );
-}
+};
 
 export { PokeBall, type PokeBallProps };
