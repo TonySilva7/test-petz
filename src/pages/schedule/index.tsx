@@ -1,15 +1,18 @@
 import { STYLES } from '@/@redux/features';
 import * as S from '@/@redux/store';
 import { Button } from '@/components/Button';
+import { Container } from '@/components/Container';
+import { IStylesProps } from '@/components/Container/styles';
 import * as Fields from '@/components/Fields';
 import * as Input from '@/components/Input';
 import * as Select from '@/components/Select';
 import { yupResolver } from '@hookform/resolvers/yup';
 import { ComponentProps, useEffect } from 'react';
 import { useForm } from 'react-hook-form';
+import { useTheme } from 'styled-components';
 import * as Yup from 'yup';
 
-type HomeProps = ComponentProps<'div'>;
+type HomeProps = ComponentProps<'main'>;
 
 type IFormSchedule = {
   firstName: string;
@@ -39,7 +42,6 @@ export default function Schedule({ ...props }: HomeProps) {
   const {
     register,
     handleSubmit,
-    watch,
     formState: { errors },
   } = useForm<IFormSchedule>({
     resolver: yupResolver(fnSchema()),
@@ -62,33 +64,64 @@ export default function Schedule({ ...props }: HomeProps) {
     return Object.keys(errors).find((key) => key === keyError);
   };
 
-  return (
-    <div {...props}>
-      <h1>Preencha o formulário abaixo para agendar sua consulta</h1>
-      <form onSubmit={handleSubmit(submit)}>
-        <Fields.Root>
-          <Fields.Legend htmlFor="firstName">Nome</Fields.Legend>
-          <Input.Control
-            {...register('firstName')}
-            id="firstName"
-            placeholder="Digite seu nome"
-          />
-          {hasErrors('firstName') && (
-            <Fields.Errors errors={[errors.firstName?.message]} />
-          )}
-        </Fields.Root>
+  const theme = useTheme();
 
-        <Fields.Root>
-          <Fields.Legend htmlFor="lastName">Sobrenome</Fields.Legend>
-          <Input.Control
-            {...register('lastName')}
-            placeholder="Digite seu sobrenome"
-            id="lastName"
-          />
-          {hasErrors('lastName') && (
-            <Fields.Errors errors={[errors.lastName?.message]} />
-          )}
-        </Fields.Root>
+  const styles: IStylesProps = {
+    m: {
+      background: `${theme.colors.primary.dark}`,
+    },
+    d: {
+      display: 'flex',
+      width: '100%',
+      background: 'green',
+      gap: '0 1rem',
+      'justify-content': 'center',
+    },
+  };
+
+  return (
+    <Container
+      as="main"
+      $styleProps={{
+        m: {
+          width: '100%',
+        },
+        d: {
+          width: '100%',
+        },
+      }}
+      {...props}
+    >
+      <h1>Preencha o formulário abaixo para agendar sua consulta</h1>
+      <form
+        onSubmit={handleSubmit(submit)}
+        style={{ border: 'solid 1px blue', width: '100%' }}
+      >
+        <Container $styleProps={styles}>
+          <Fields.Root>
+            <Fields.Legend htmlFor="firstName">Nome</Fields.Legend>
+            <Input.Control
+              {...register('firstName')}
+              id="firstName"
+              placeholder="Digite seu nome"
+            />
+            {hasErrors('firstName') && (
+              <Fields.Errors errors={[errors.firstName?.message]} />
+            )}
+          </Fields.Root>
+
+          <Fields.Root>
+            <Fields.Legend htmlFor="lastName">Sobrenome</Fields.Legend>
+            <Input.Control
+              {...register('lastName')}
+              placeholder="Digite seu sobrenome"
+              id="lastName"
+            />
+            {hasErrors('lastName') && (
+              <Fields.Errors errors={[errors.lastName?.message]} />
+            )}
+          </Fields.Root>
+        </Container>
 
         <Fields.Root>
           <Fields.Legend htmlFor="region">Região</Fields.Legend>
@@ -188,7 +221,7 @@ export default function Schedule({ ...props }: HomeProps) {
           <Button type="submit">Concluir Agendamento</Button>
         </div>
       </form>
-    </div>
+    </Container>
   );
 }
 

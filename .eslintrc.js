@@ -30,5 +30,15 @@ module.exports = {
     '@typescript-eslint/explicit-module-boundary-types': 'off',
     'react/react-in-jsx-scope': 'off',
     'no-console': 'error',
+    '@typescript-eslint/no-unused-vars': [
+      'warn',
+      {
+        argsIgnorePattern: '^_',
+        varsIgnorePattern: '^_',
+        ignoreRestSiblings: true,
+        args: 'after-used',
+        vars: 'all',
+      },
+    ],
   },
 };
