@@ -40,6 +40,10 @@ const SelectItems = styled.ul<{ open: boolean }>`
 const SelectOption = styled.div`
   padding: 10px;
   cursor: pointer;
+
+  &:hover {
+    background-color: #ddd;
+  }
 `;
 
 const CustomSelect: ForwardRefRenderFunction<
@@ -75,7 +79,7 @@ const CustomSelect: ForwardRefRenderFunction<
 
   const handleOptionClick = (option: ReactElement) => {
     setSelectedOption(option);
-    setValue('my-input', option.props.value);
+    setValue('my-Select', option.props.value);
     setIsOpen(false);
   };
 

@@ -4,7 +4,7 @@ import { ErrorsWrapper, LegendWrapper, RootWrapper } from './styles';
 type RootProps = ComponentProps<'div'>;
 type LegendProps = ComponentProps<'label'>;
 type ErrorsProps = ComponentProps<'ul'> & {
-  errors: Array<string>;
+  errors: Array<string | undefined>;
 };
 
 function Root({ children, ...props }: RootProps) {
