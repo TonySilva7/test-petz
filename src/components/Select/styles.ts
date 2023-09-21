@@ -23,7 +23,7 @@ export const ControlWrapper = styled.select`
 `;
 
 export const OptionWrapper = styled.option`
-  display: flex;
-  appearance: none;
-  accent-color: red;
+  :not(:first-child) {
+    background-color: red;
+  }
 `;
