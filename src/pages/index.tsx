@@ -9,9 +9,9 @@ export default function Home() {
   const dispatch = S.useAppDispatch();
 
   useEffect(() => {
-    dispatch(STYLES.shrinkHomeButton({ isLoadingHome: true }));
+    dispatch(STYLES.shrinkHomeButton(true));
     setTimeout(() => {
-      dispatch(STYLES.shrinkHomeButton({ isLoadingHome: false }));
+      dispatch(STYLES.shrinkHomeButton(false));
     }, 5000);
   }, [dispatch]);
 

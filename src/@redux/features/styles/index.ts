@@ -4,6 +4,10 @@ import { PayloadAction, createSlice } from '@reduxjs/toolkit';
 
 const initialState: T.IStateStyles = {
   isLoadingHome: false,
+  titlesHeader: {
+    title: '',
+    subTitle: '',
+  },
 };
 
 export const userSlice = createSlice({
@@ -11,13 +15,24 @@ export const userSlice = createSlice({
   initialState,
 
   reducers: {
-    shrinkHomeButton: (state, action: PayloadAction<T.IStateStyles>) => {
-      state.isLoadingHome = action.payload.isLoadingHome;
+    shrinkHomeButton: (
+      state,
+      action: PayloadAction<T.IStateStyles['isLoadingHome']>,
+    ) => {
+      state.isLoadingHome = action.payload;
+    },
+
+    setTitleHeader: (
+      state,
+      action: PayloadAction<T.IStateStyles['titlesHeader']>,
+    ) => {
+      state.titlesHeader.title = action.payload.title;
+      state.titlesHeader.subTitle = action.payload.subTitle;
     },
   },
 });
 
-export const { shrinkHomeButton } = userSlice.actions;
+export const { shrinkHomeButton, setTitleHeader } = userSlice.actions;
 
 export const selectStyles = (state: RootState): T.IStateStyles =>
   state.stylesReducer;

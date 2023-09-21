@@ -37,7 +37,7 @@ export const GlobalStyle = createGlobalStyle`
     }
 
     input {
-      font-family: 'Jost', 'Roboto', sans-serif;
+      font-family: 'Inter', 'Roboto', sans-serif;
     }
 
     button {

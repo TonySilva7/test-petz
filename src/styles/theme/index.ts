@@ -9,8 +9,11 @@ export const theme = {
     white: '#FFFFFF',
     black: '#111111',
     lightBlack: '#1D1D1D',
-    gray: '#747474',
-    darkGray: '#333333',
+    gray: {
+      light: '#D5D5D5',
+      medium: '#747474',
+      dark: '#545454',
+    },
   },
   spacings: {
     small: '1rem',

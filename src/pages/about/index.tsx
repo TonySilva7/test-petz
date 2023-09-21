@@ -1,9 +1,22 @@
-import { ComponentProps } from 'react';
+import { ComponentProps, useEffect } from 'react';
 import { AboutWrapper } from './styles';
+import * as S from '@/@redux/store';
+import { STYLES } from '@/@redux/features';
 
 type AboutProps = ComponentProps<'div'>;
 
 export default function About({ ...props }: AboutProps) {
+  const dispatch = S.useAppDispatch();
+
+  useEffect(() => {
+    dispatch(
+      STYLES.setTitleHeader({
+        title: 'Quem Somos',
+        subTitle: 'A maior rede de tratamento pokémon',
+      }),
+    );
+  }, [dispatch]);
+
   return (
     <AboutWrapper {...props}>
       <h1>O Centro Pokémon</h1>
