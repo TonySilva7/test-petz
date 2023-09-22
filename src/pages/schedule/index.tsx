@@ -7,6 +7,7 @@ import * as Fields from '@/components/Fields';
 import { Form } from '@/components/Form';
 import * as Input from '@/components/Input';
 import * as Select from '@/components/Select';
+import { Title } from '@/components/Title';
 import { yupResolver } from '@hookform/resolvers/yup';
 import { ComponentProps, useEffect } from 'react';
 import { useForm } from 'react-hook-form';
@@ -95,7 +96,7 @@ export default function Schedule({ ...props }: HomeProps) {
       style={{ border: 'solid 2px pink' }}
       {...props}
     >
-      <h1>Preencha o formulário abaixo para agendar sua consulta</h1>
+      <Title>Preencha o formulário abaixo para agendar sua consulta</Title>
       <Form onSubmit={handleSubmit(submit)}>
         <Container $styleProps={styles}>
           <Fields.Root>
@@ -131,6 +132,7 @@ export default function Schedule({ ...props }: HomeProps) {
               placeholder="Selecione sua região"
               id="region"
             >
+              <Select.Option value="">Selecione sua região</Select.Option>
               <Select.Option value="1">Paraná</Select.Option>
             </Select.Control>
 
@@ -225,7 +227,7 @@ export default function Schedule({ ...props }: HomeProps) {
         </small>
 
         <div>
-          <h1>Valor Total: R$ 72,10</h1>
+          <Title>Valor Total: R$ 72,10</Title>
           <Button type="submit">Concluir Agendamento</Button>
         </div>
       </Form>
