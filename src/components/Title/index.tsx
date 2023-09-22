@@ -1,22 +1,22 @@
 import { ComponentProps } from 'react';
-import { TitleWrapper, TitleWrapperProps } from './styles';
+import { TextWrapper, TextWrapperProps } from './styles';
 import { StyledTarget } from 'styled-components/dist/types';
 
-type TitleProps = ComponentProps<'h1'> &
-  TitleWrapperProps & {
+type TextProps = ComponentProps<'h1'> &
+  TextWrapperProps & {
     as?: StyledTarget<'web'>;
   };
 
-function Title({
+function Text({
   children,
   as,
   fontSize,
   fontWeight,
   color,
   ...props
-}: TitleProps) {
+}: TextProps) {
   return (
-    <TitleWrapper
+    <TextWrapper
       as={as}
       color={color}
       fontSize={fontSize}
@@ -24,8 +24,8 @@ function Title({
       {...props}
     >
       {children}
-    </TitleWrapper>
+    </TextWrapper>
   );
 }
 
-export { Title, type TitleProps };
+export { Text, type TextProps };

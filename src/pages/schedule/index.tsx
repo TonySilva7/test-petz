@@ -7,9 +7,9 @@ import * as Fields from '@/components/Fields';
 import { Form } from '@/components/Form';
 import * as Input from '@/components/Input';
 import * as Select from '@/components/Select';
-import { Title } from '@/components/Title';
+import { Text } from '@/components/Title';
 import { yupResolver } from '@hookform/resolvers/yup';
-import { ComponentProps, useEffect } from 'react';
+import React, { ComponentProps, useEffect } from 'react';
 import { useForm } from 'react-hook-form';
 import { useTheme } from 'styled-components';
 import * as Yup from 'yup';
@@ -79,6 +79,23 @@ export default function Schedule({ ...props }: HomeProps) {
     },
   };
 
+  const textStyles = {
+    as: 'p',
+    fontSize: 1.4,
+    fontWeight: 400,
+    color: theme.colors.gray.medium,
+  };
+
+  const resumeScheduleStyles: IStylesProps = {
+    m: {
+      display: 'flex',
+    },
+    d: {
+      display: 'flex',
+      'justify-content': 'space-between',
+    },
+  };
+
   return (
     <Container
       as="main"
@@ -96,7 +113,7 @@ export default function Schedule({ ...props }: HomeProps) {
       style={{ border: 'solid 2px pink' }}
       {...props}
     >
-      <Title>Preencha o formulário abaixo para agendar sua consulta</Title>
+      <Text>Preencha o formulário abaixo para agendar sua consulta</Text>
       <Form onSubmit={handleSubmit(submit)}>
         <Container $styleProps={styles}>
           <Fields.Root>
@@ -157,79 +174,90 @@ export default function Schedule({ ...props }: HomeProps) {
           </Fields.Root>
         </Container>
 
-        <h2>Cadastre seu time</h2>
-        <p>Atendemos até 6 pokémons por vez</p>
-        <Button
-          type="button"
-          $styleProps={{ width: { m: 28, d: 28 }, isTransparent: true }}
-          style={{ border: 'solid 1px #1D1D1D' }}
-        >
-          Adicionar novo pokémon ao time... +
-        </Button>
+        <Container>
+          <Text fontSize={1.2} fontWeight={700}>
+            Cadastre seu time
+          </Text>
+          <Text
+            as="p"
+            fontSize={1.2}
+            fontWeight={500}
+            color={theme.colors.gray.medium}
+          >
+            Atendemos até 6 pokémons por vez
+          </Text>
+          <Button
+            type="button"
+            $styleProps={{ width: { m: 28, d: 28 }, isTransparent: true }}
+            style={{ border: 'solid 1px #1D1D1D' }}
+          >
+            Adicionar novo pokémon ao time... +
+          </Button>
 
-        <Container $styleProps={styles}>
-          <Fields.Root>
-            <Fields.Legend htmlFor="schedulingDate">
-              Data para Atendimento
-            </Fields.Legend>
-            <Select.Control
-              {...register('schedulingDate')}
-              placeholder="Selecione sua região"
-              id="schedulingDate"
-            >
-              <Select.Option value="1">12/04/04</Select.Option>
-            </Select.Control>
+          <Container $styleProps={styles}>
+            <Fields.Root>
+              <Fields.Legend htmlFor="schedulingDate">
+                Data para Atendimento
+              </Fields.Legend>
+              <Select.Control
+                {...register('schedulingDate')}
+                placeholder="Selecione sua região"
+                id="schedulingDate"
+              >
+                <Select.Option value="1">12/04/04</Select.Option>
+              </Select.Control>
 
-            {hasErrors('schedulingDate') && (
-              <Fields.Errors errors={[errors.schedulingDate?.message]} />
-            )}
-          </Fields.Root>
+              {hasErrors('schedulingDate') && (
+                <Fields.Errors errors={[errors.schedulingDate?.message]} />
+              )}
+            </Fields.Root>
 
-          <Fields.Root>
-            <Fields.Legend htmlFor="schedulingTime">
-              Horário de Atendimento
-            </Fields.Legend>
-            <Select.Control
-              {...register('schedulingTime')}
-              placeholder="Selecione sua região"
-              id="schedulingTime"
-            >
-              <Select.Option value="1">12/04/04</Select.Option>
-            </Select.Control>
+            <Fields.Root>
+              <Fields.Legend htmlFor="schedulingTime">
+                Horário de Atendimento
+              </Fields.Legend>
+              <Select.Control
+                {...register('schedulingTime')}
+                placeholder="Selecione sua região"
+                id="schedulingTime"
+              >
+                <Select.Option value="1">12/04/04</Select.Option>
+              </Select.Control>
 
-            {hasErrors('schedulingTime') && (
-              <Fields.Errors errors={[errors.schedulingTime?.message]} />
-            )}
-          </Fields.Root>
+              {hasErrors('schedulingTime') && (
+                <Fields.Errors errors={[errors.schedulingTime?.message]} />
+              )}
+            </Fields.Root>
+          </Container>
         </Container>
 
         <hr />
 
-        <div>
-          <p>Número de pokémons a serem atendidos:</p>
-          <span>01</span>
-        </div>
-        <div>
-          <p>Atendimento unitário por pokémon:</p>
-          <span>R$ 70,00</span>
-        </div>
-        <div>
-          <p>Subtotal:</p>
-          <span>01</span>
-        </div>
-        <div>
-          <p>Taxa geracional*:</p>
-          <span>01</span>
-        </div>
-        <small>
+        <Container $styleProps={resumeScheduleStyles}>
+          <Text {...textStyles}>Número de pokémons a serem atendidos:</Text>
+          <Text {...textStyles}>01</Text>
+        </Container>
+        <Container $styleProps={resumeScheduleStyles}>
+          <Text {...textStyles}>Atendimento unitário por pokémon:</Text>
+          <Text {...textStyles}>R$ 70,00</Text>
+        </Container>
+        <Container $styleProps={resumeScheduleStyles}>
+          <Text {...textStyles}>Subtotal:</Text>
+          <Text {...textStyles}>R$ 70,00</Text>
+        </Container>
+        <Container $styleProps={resumeScheduleStyles}>
+          <Text {...textStyles}>Taxa geracional*:</Text>
+          <Text {...textStyles}>R$ 2,10</Text>
+        </Container>
+        <Container as={'small'}>
           *adicionamos uma taxa de 3%, multiplicado pelo número da geração mais
           alta do time, com limite de até 30%
-        </small>
+        </Container>
 
-        <div>
-          <Title>Valor Total: R$ 72,10</Title>
+        <Container $styleProps={resumeScheduleStyles}>
+          <Text {...textStyles}>Valor Total: R$ 72,10</Text>
           <Button type="submit">Concluir Agendamento</Button>
-        </div>
+        </Container>
       </Form>
     </Container>
   );

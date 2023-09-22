@@ -3,7 +3,7 @@ import styled from 'styled-components';
 export const RootWrapper = styled.div`
   display: flex;
   flex-direction: column;
-  row-gap: 1rem;
+  row-gap: 0.5rem;
   min-width: 26.5rem;
 `;
 
