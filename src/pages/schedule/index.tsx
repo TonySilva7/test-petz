@@ -7,7 +7,7 @@ import * as Fields from '@/components/Fields';
 import { Form } from '@/components/Form';
 import * as Input from '@/components/Input';
 import * as Select from '@/components/Select';
-import { Text } from '@/components/Title';
+import { Text } from '@/components/Text';
 import { yupResolver } from '@hookform/resolvers/yup';
 import { ComponentProps, useEffect } from 'react';
 import { useFieldArray, useForm } from 'react-hook-form';
@@ -137,6 +137,7 @@ export default function Schedule({ ...props }: HomeProps) {
           'flex-direction': 'column',
           width: '100%',
           'align-items': 'center',
+          padding: '3rem 0',
         },
       }}
       style={{ border: 'solid 2px pink' }}
@@ -203,18 +204,33 @@ export default function Schedule({ ...props }: HomeProps) {
           </Fields.Root>
         </Container>
 
-        <Container>
-          <Text fontSize={1.2} fontWeight={700}>
-            Cadastre seu time
-          </Text>
-          <Text
-            as="p"
-            fontSize={1.2}
-            fontWeight={500}
-            color={theme.colors.gray.medium}
+        <Container
+          $styleProps={{
+            d: {
+              display: 'flex',
+              'flex-direction': 'column',
+              padding: '1rem 0',
+              gap: '2rem 1rem',
+            },
+          }}
+        >
+          <Container
+            $styleProps={{
+              d: { display: 'flex', 'flex-direction': 'column', gap: '1rem 0' },
+            }}
           >
-            Atendemos até 6 pokémons por vez
-          </Text>
+            <Text fontSize={1.2} fontWeight={700}>
+              Cadastre seu time
+            </Text>
+            <Text
+              as="p"
+              fontSize={1.2}
+              fontWeight={500}
+              color={theme.colors.gray.medium}
+            >
+              Atendemos até 6 pokémons por vez
+            </Text>
+          </Container>
           {fields.map((field, index) => (
             <Container
               key={field.id}
@@ -227,9 +243,8 @@ export default function Schedule({ ...props }: HomeProps) {
                   display: 'flex',
                   'flex-direction': 'row',
                   'justify-content': 'center',
-                  'align-items': 'flex-end',
-                  gap: '1rem',
-                  // 'justify-content': 'space-between',
+                  'align-items': 'center',
+                  gap: '0 0.5rem',
                 },
               }}
             >
@@ -237,13 +252,17 @@ export default function Schedule({ ...props }: HomeProps) {
                 <Fields.Legend htmlFor={`pokemonTeam[${index}].pokemon`}>
                   {`Pokémon ${index + 1}`}
                 </Fields.Legend>
-                <Input.Control
+                <Select.Control
                   {...register(
                     `pokemonTeam[${index}].pokemon` as keyof IFormSchedule,
                   )}
-                  placeholder="Digite o nome do pokémon"
+                  placeholder="Selecione seu pokémon"
                   id={`pokemonTeam[${index}].pokemon`}
-                />
+                >
+                  <Select.Option value="1">Pokemon 01</Select.Option>
+                  <Select.Option value="2">Pokemon 02</Select.Option>
+                  <Select.Option value="3">Pokemon 03</Select.Option>
+                </Select.Control>
 
                 {hasErrors(
                   `pokemonTeam[${index}].pokemon` as keyof IFormSchedule,
@@ -259,14 +278,20 @@ export default function Schedule({ ...props }: HomeProps) {
               <Button
                 type="button"
                 $styleProps={{
-                  width: { m: 6.5, d: 6.5 },
-                  height: { m: 2.5, d: 2.5 },
-                  size: { m: 1.1, d: 1.1 },
+                  width: { m: 3, d: 3 },
+                  height: { m: 3, d: 3 },
                   isTransparent: true,
                 }}
                 onClick={() => remove(index)}
               >
-                Remover
+                <Text
+                  as="p"
+                  fontSize={2}
+                  fontWeight={500}
+                  color={theme.colors.lightBlack}
+                >
+                  &times;
+                </Text>
               </Button>
             </Container>
           ))}
@@ -279,42 +304,42 @@ export default function Schedule({ ...props }: HomeProps) {
           >
             Adicionar novo pokémon ao time... +
           </Button>
+        </Container>
 
-          <Container $styleProps={styles}>
-            <Fields.Root>
-              <Fields.Legend htmlFor="schedulingDate">
-                Data para Atendimento
-              </Fields.Legend>
-              <Select.Control
-                {...register('schedulingDate')}
-                placeholder="Selecione sua região"
-                id="schedulingDate"
-              >
-                <Select.Option value="1">12/04/04</Select.Option>
-              </Select.Control>
+        <Container $styleProps={styles}>
+          <Fields.Root>
+            <Fields.Legend htmlFor="schedulingDate">
+              Data para Atendimento
+            </Fields.Legend>
+            <Select.Control
+              {...register('schedulingDate')}
+              placeholder="Selecione sua região"
+              id="schedulingDate"
+            >
+              <Select.Option value="1">12/04/04</Select.Option>
+            </Select.Control>
 
-              {hasErrors('schedulingDate') && (
-                <Fields.Errors errors={[errors.schedulingDate?.message]} />
-              )}
-            </Fields.Root>
+            {hasErrors('schedulingDate') && (
+              <Fields.Errors errors={[errors.schedulingDate?.message]} />
+            )}
+          </Fields.Root>
 
-            <Fields.Root>
-              <Fields.Legend htmlFor="schedulingTime">
-                Horário de Atendimento
-              </Fields.Legend>
-              <Select.Control
-                {...register('schedulingTime')}
-                placeholder="Selecione sua região"
-                id="schedulingTime"
-              >
-                <Select.Option value="1">12/04/04</Select.Option>
-              </Select.Control>
+          <Fields.Root>
+            <Fields.Legend htmlFor="schedulingTime">
+              Horário de Atendimento
+            </Fields.Legend>
+            <Select.Control
+              {...register('schedulingTime')}
+              placeholder="Selecione sua região"
+              id="schedulingTime"
+            >
+              <Select.Option value="1">12/04/04</Select.Option>
+            </Select.Control>
 
-              {hasErrors('schedulingTime') && (
-                <Fields.Errors errors={[errors.schedulingTime?.message]} />
-              )}
-            </Fields.Root>
-          </Container>
+            {hasErrors('schedulingTime') && (
+              <Fields.Errors errors={[errors.schedulingTime?.message]} />
+            )}
+          </Fields.Root>
         </Container>
 
         <hr />

@@ -1,7 +1,12 @@
 import { ComponentProps } from 'react';
-import { ErrorsWrapper, LegendWrapper, RootWrapper } from './styles';
+import {
+  ErrorsWrapper,
+  LegendWrapper,
+  RootWrapper,
+  RootWrapperProps,
+} from './styles';
 
-type RootProps = ComponentProps<'div'>;
+type RootProps = ComponentProps<'div'> & RootWrapperProps;
 type LegendProps = ComponentProps<'label'>;
 type ErrorsProps = ComponentProps<'ul'> & {
   errors: Array<string | undefined>;

@@ -4,6 +4,7 @@ export type TextWrapperProps = {
   color?: string;
   fontSize?: number;
   fontWeight?: number;
+  width?: string;
 };
 
 export const TextWrapper = styled.h1<TextWrapperProps>`

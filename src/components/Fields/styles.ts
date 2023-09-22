@@ -1,10 +1,21 @@
 import styled from 'styled-components';
 
-export const RootWrapper = styled.div`
+export type RootWrapperProps = {
+  width?: string;
+  height?: string;
+  padding?: string;
+  margin?: string;
+};
+
+export const RootWrapper = styled.div<RootWrapperProps>`
   display: flex;
   flex-direction: column;
   row-gap: 0.5rem;
   min-width: 26.5rem;
+  width: ${({ width }) => width || '100%'};
+  height: ${({ height }) => height || 'auto'};
+  padding: ${({ padding }) => padding || '0'};
+  margin: ${({ margin }) => margin || '0'};
 `;
 
 export const LegendWrapper = styled.label`

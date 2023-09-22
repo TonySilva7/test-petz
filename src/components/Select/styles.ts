@@ -20,17 +20,6 @@ export const ControlWrapper = styled.select`
     outline: transparent;
     box-shadow: 0 0 0.4rem 0.2rem ${({ theme }) => theme.colors.primary.light};
   }
-
-  &::after {
-    content: 'asdfasdf';
-    position: absolute;
-    top: 1.5rem;
-    right: 1rem;
-  }
 `;
 
-export const OptionWrapper = styled.option`
-  :not(:first-child) {
-    background-color: red;
-  }
-`;
+export const OptionWrapper = styled.option``;
