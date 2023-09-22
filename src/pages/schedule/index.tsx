@@ -9,8 +9,8 @@ import * as Input from '@/components/Input';
 import * as Select from '@/components/Select';
 import { Text } from '@/components/Title';
 import { yupResolver } from '@hookform/resolvers/yup';
-import React, { ComponentProps, useEffect } from 'react';
-import { useForm } from 'react-hook-form';
+import { ComponentProps, useEffect } from 'react';
+import { useFieldArray, useForm } from 'react-hook-form';
 import { useTheme } from 'styled-components';
 import * as Yup from 'yup';
 
@@ -21,7 +21,7 @@ type IFormSchedule = {
   lastName: string;
   region: string;
   city: string;
-  pokemonTeam: string;
+  pokemonTeam?: { pokemon: string }[];
   schedulingDate: string;
   schedulingTime: string;
 };
@@ -35,7 +35,13 @@ export default function Schedule({ ...props }: HomeProps) {
       lastName: Yup.string().required(`Sobrenome é obrigatório`),
       region: Yup.string().required(`Região é obrigatório`),
       city: Yup.string().required(`Cidade é obrigatório`),
-      pokemonTeam: Yup.string().required(`Time é obrigatório`),
+
+      pokemonTeam: Yup.array().of(
+        Yup.object().shape({
+          pokemon: Yup.string().required('Pokémon é obrigatório'),
+        }),
+      ),
+
       schedulingDate: Yup.string().required(`Data é obrigatório`),
       schedulingTime: Yup.string().required(`Hora é obrigatório`),
     }).required();
@@ -44,9 +50,15 @@ export default function Schedule({ ...props }: HomeProps) {
   const {
     register,
     handleSubmit,
+    control,
     formState: { errors },
   } = useForm<IFormSchedule>({
     resolver: yupResolver(fnSchema()),
+  });
+
+  const { fields, append, remove } = useFieldArray({
+    control,
+    name: 'pokemonTeam',
   });
 
   useEffect(() => {
@@ -63,7 +75,20 @@ export default function Schedule({ ...props }: HomeProps) {
   };
 
   const hasErrors = (keyError: keyof IFormSchedule) => {
-    return Object.keys(errors).find((key) => key === keyError);
+    const listErrors = Object.keys(errors);
+    if (!listErrors.length) return false;
+
+    if (keyError.includes('pokemonTeam')) {
+      const match = keyError.match(/\[(\d+)\]/);
+      if (match) {
+        const index = Number(match[1]);
+        const hasError = errors.pokemonTeam?.[index]?.pokemon?.message;
+        return !!hasError;
+      }
+    }
+
+    const hasError = listErrors.includes(keyError);
+    return hasError;
   };
 
   const theme = useTheme();
@@ -94,6 +119,10 @@ export default function Schedule({ ...props }: HomeProps) {
       display: 'flex',
       'justify-content': 'space-between',
     },
+  };
+
+  const handleAddFields = () => {
+    append({ pokemon: '' });
   };
 
   return (
@@ -186,10 +215,67 @@ export default function Schedule({ ...props }: HomeProps) {
           >
             Atendemos até 6 pokémons por vez
           </Text>
+          {fields.map((field, index) => (
+            <Container
+              key={field.id}
+              $styleProps={{
+                m: {
+                  display: 'flex',
+                  'flex-direction': 'column',
+                },
+                d: {
+                  display: 'flex',
+                  'flex-direction': 'row',
+                  'justify-content': 'center',
+                  'align-items': 'flex-end',
+                  gap: '1rem',
+                  // 'justify-content': 'space-between',
+                },
+              }}
+            >
+              <Fields.Root>
+                <Fields.Legend htmlFor={`pokemonTeam[${index}].pokemon`}>
+                  {`Pokémon ${index + 1}`}
+                </Fields.Legend>
+                <Input.Control
+                  {...register(
+                    `pokemonTeam[${index}].pokemon` as keyof IFormSchedule,
+                  )}
+                  placeholder="Digite o nome do pokémon"
+                  id={`pokemonTeam[${index}].pokemon`}
+                />
+
+                {hasErrors(
+                  `pokemonTeam[${index}].pokemon` as keyof IFormSchedule,
+                ) && (
+                  <Fields.Errors
+                    errors={[
+                      errors.pokemonTeam?.[index]?.pokemon?.message ?? '',
+                    ]}
+                  />
+                )}
+              </Fields.Root>
+
+              <Button
+                type="button"
+                $styleProps={{
+                  width: { m: 6.5, d: 6.5 },
+                  height: { m: 2.5, d: 2.5 },
+                  size: { m: 1.1, d: 1.1 },
+                  isTransparent: true,
+                }}
+                onClick={() => remove(index)}
+              >
+                Remover
+              </Button>
+            </Container>
+          ))}
+
           <Button
             type="button"
             $styleProps={{ width: { m: 28, d: 28 }, isTransparent: true }}
             style={{ border: 'solid 1px #1D1D1D' }}
+            onClick={handleAddFields}
           >
             Adicionar novo pokémon ao time... +
           </Button>
