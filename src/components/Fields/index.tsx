@@ -1,23 +1,32 @@
-import { ComponentProps } from 'react';
+import { ComponentProps, HTMLAttributes } from 'react';
+import { ContainerWrapperProps } from '../Container/styles';
 import {
   ErrorsWrapper,
   LegendWrapper,
+  LegendWrapperProps,
   RootWrapper,
-  RootWrapperProps,
 } from './styles';
 
-type RootProps = ComponentProps<'div'> & RootWrapperProps;
-type LegendProps = ComponentProps<'label'>;
+type RootProps = HTMLAttributes<HTMLDivElement> & ContainerWrapperProps;
+type LegendProps = ComponentProps<'label'> & LegendWrapperProps;
 type ErrorsProps = ComponentProps<'ul'> & {
   errors: Array<string | undefined>;
 };
 
-function Root({ children, ...props }: RootProps) {
-  return <RootWrapper {...props}>{children}</RootWrapper>;
+function Root({ children, $styleProps, ...props }: RootProps) {
+  return (
+    <RootWrapper $styleProps={$styleProps} {...props}>
+      {children}
+    </RootWrapper>
+  );
 }
 
-function Legend({ children, ...props }: LegendProps) {
-  return <LegendWrapper {...props}>{children}</LegendWrapper>;
+function Legend({ children, width, ...props }: LegendProps) {
+  return (
+    <LegendWrapper width={width} {...props}>
+      {children}
+    </LegendWrapper>
+  );
 }
 
 function Errors({ errors, ...props }: ErrorsProps) {
@@ -31,10 +40,10 @@ function Errors({ errors, ...props }: ErrorsProps) {
 }
 
 export {
-  Root,
-  Legend,
   Errors,
-  type RootProps,
-  type LegendProps,
+  Legend,
+  Root,
   type ErrorsProps,
+  type LegendProps,
+  type RootProps,
 };

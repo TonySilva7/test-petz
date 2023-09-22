@@ -8,12 +8,15 @@ type IMainStyles = {
   'align-items'?: 'flex-start' | 'center' | 'flex-end' | 'stretch';
   'justify-content'?:
     | 'flex-start'
-    | 'center'
     | 'flex-end'
+    | 'center'
     | 'space-between'
-    | 'space-around';
+    | 'space-around'
+    | 'space-evenly'
+    | 'stretch';
   wrap?: 'wrap' | 'nowrap';
   gap?: string;
+  flex?: string;
   width?: string;
   height?: string;
   padding?: string;

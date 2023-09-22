@@ -1,27 +1,17 @@
 import styled from 'styled-components';
+import { ContainerWrapper } from '../Container/styles';
 
-export type RootWrapperProps = {
+export type LegendWrapperProps = {
   width?: string;
-  height?: string;
-  padding?: string;
-  margin?: string;
 };
 
-export const RootWrapper = styled.div<RootWrapperProps>`
-  display: flex;
-  flex-direction: column;
-  row-gap: 0.5rem;
-  min-width: 26.5rem;
-  width: ${({ width }) => width || '100%'};
-  height: ${({ height }) => height || 'auto'};
-  padding: ${({ padding }) => padding || '0'};
-  margin: ${({ margin }) => margin || '0'};
-`;
+export const RootWrapper = styled(ContainerWrapper)``;
 
-export const LegendWrapper = styled.label`
+export const LegendWrapper = styled.label<LegendWrapperProps>`
   display: flex;
   font-size: 1.2rem;
   font-weight: 700;
+  width: ${({ width }) => width || '100%'};
 `;
 
 export const ErrorsWrapper = styled.ul`

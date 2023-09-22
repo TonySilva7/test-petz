@@ -121,6 +121,15 @@ export default function Schedule({ ...props }: HomeProps) {
     },
   };
 
+  const selectStyles: IStylesProps = {
+    d: {
+      display: 'flex',
+      'flex-direction': 'column',
+      width: '26.5rem',
+      gap: '1rem 0',
+    },
+  };
+
   const handleAddFields = () => {
     append({ pokemon: '' });
   };
@@ -146,7 +155,7 @@ export default function Schedule({ ...props }: HomeProps) {
       <Text>Preencha o formulário abaixo para agendar sua consulta</Text>
       <Form onSubmit={handleSubmit(submit)}>
         <Container $styleProps={styles}>
-          <Fields.Root>
+          <Fields.Root $styleProps={selectStyles}>
             <Fields.Legend htmlFor="firstName">Nome</Fields.Legend>
             <Input.Control
               {...register('firstName')}
@@ -158,7 +167,7 @@ export default function Schedule({ ...props }: HomeProps) {
             )}
           </Fields.Root>
 
-          <Fields.Root>
+          <Fields.Root $styleProps={selectStyles}>
             <Fields.Legend htmlFor="lastName">Sobrenome</Fields.Legend>
             <Input.Control
               {...register('lastName')}
@@ -172,7 +181,7 @@ export default function Schedule({ ...props }: HomeProps) {
         </Container>
 
         <Container $styleProps={styles}>
-          <Fields.Root>
+          <Fields.Root $styleProps={selectStyles}>
             <Fields.Legend htmlFor="region">Região</Fields.Legend>
             <Select.Control
               {...register('region')}
@@ -188,7 +197,7 @@ export default function Schedule({ ...props }: HomeProps) {
             )}
           </Fields.Root>
 
-          <Fields.Root>
+          <Fields.Root $styleProps={selectStyles}>
             <Fields.Legend htmlFor="city">Cidade</Fields.Legend>
             <Select.Control
               {...register('city')}
@@ -248,8 +257,20 @@ export default function Schedule({ ...props }: HomeProps) {
                 },
               }}
             >
-              <Fields.Root>
-                <Fields.Legend htmlFor={`pokemonTeam[${index}].pokemon`}>
+              <Fields.Root
+                $styleProps={{
+                  ...selectStyles,
+                  d: {
+                    display: 'inline-flex',
+                    flex: '1 1 auto',
+                    'align-items': 'center',
+                  },
+                }}
+              >
+                <Fields.Legend
+                  width="8.5rem"
+                  htmlFor={`pokemonTeam[${index}].pokemon`}
+                >
                   {`Pokémon ${index + 1}`}
                 </Fields.Legend>
                 <Select.Control
@@ -307,7 +328,7 @@ export default function Schedule({ ...props }: HomeProps) {
         </Container>
 
         <Container $styleProps={styles}>
-          <Fields.Root>
+          <Fields.Root $styleProps={selectStyles}>
             <Fields.Legend htmlFor="schedulingDate">
               Data para Atendimento
             </Fields.Legend>
@@ -324,7 +345,7 @@ export default function Schedule({ ...props }: HomeProps) {
             )}
           </Fields.Root>
 
-          <Fields.Root>
+          <Fields.Root $styleProps={selectStyles}>
             <Fields.Legend htmlFor="schedulingTime">
               Horário de Atendimento
             </Fields.Legend>
@@ -366,7 +387,7 @@ export default function Schedule({ ...props }: HomeProps) {
         </Container>
 
         <Container $styleProps={resumeScheduleStyles}>
-          <Text {...textStyles}>Valor Total: R$ 72,10</Text>
+          <Text>Valor Total: R$ 72,10</Text>
           <Button type="submit">Concluir Agendamento</Button>
         </Container>
       </Form>
