@@ -4,6 +4,7 @@ import { Button } from '@/components/Button';
 import { Container } from '@/components/Container';
 import { IStylesProps } from '@/components/Container/styles';
 import * as Fields from '@/components/Fields';
+import { Form } from '@/components/Form';
 import * as Input from '@/components/Input';
 import * as Select from '@/components/Select';
 import { yupResolver } from '@hookform/resolvers/yup';
@@ -72,10 +73,8 @@ export default function Schedule({ ...props }: HomeProps) {
     },
     d: {
       display: 'flex',
-      width: '100%',
-      background: 'green',
       gap: '0 1rem',
-      'justify-content': 'center',
+      'justify-content': 'space-between',
     },
   };
 
@@ -87,16 +86,17 @@ export default function Schedule({ ...props }: HomeProps) {
           width: '100%',
         },
         d: {
+          display: 'flex',
+          'flex-direction': 'column',
           width: '100%',
+          'align-items': 'center',
         },
       }}
+      style={{ border: 'solid 2px pink' }}
       {...props}
     >
       <h1>Preencha o formulário abaixo para agendar sua consulta</h1>
-      <form
-        onSubmit={handleSubmit(submit)}
-        style={{ border: 'solid 1px blue', width: '100%' }}
-      >
+      <Form onSubmit={handleSubmit(submit)}>
         <Container $styleProps={styles}>
           <Fields.Root>
             <Fields.Legend htmlFor="firstName">Nome</Fields.Legend>
@@ -123,75 +123,83 @@ export default function Schedule({ ...props }: HomeProps) {
           </Fields.Root>
         </Container>
 
-        <Fields.Root>
-          <Fields.Legend htmlFor="region">Região</Fields.Legend>
-          <Select.Control
-            {...register('region')}
-            placeholder="Selecione sua região"
-            id="region"
-          >
-            <Select.Option value="1">Paraná</Select.Option>
-          </Select.Control>
+        <Container $styleProps={styles}>
+          <Fields.Root>
+            <Fields.Legend htmlFor="region">Região</Fields.Legend>
+            <Select.Control
+              {...register('region')}
+              placeholder="Selecione sua região"
+              id="region"
+            >
+              <Select.Option value="1">Paraná</Select.Option>
+            </Select.Control>
 
-          {hasErrors('region') && (
-            <Fields.Errors errors={[errors.region?.message]} />
-          )}
-        </Fields.Root>
+            {hasErrors('region') && (
+              <Fields.Errors errors={[errors.region?.message]} />
+            )}
+          </Fields.Root>
 
-        <Fields.Root>
-          <Fields.Legend htmlFor="city">Cidade</Fields.Legend>
-          <Select.Control
-            {...register('city')}
-            placeholder="Selecione sua região"
-            id="city"
-          >
-            <Select.Option value="1">Londrina</Select.Option>
-          </Select.Control>
+          <Fields.Root>
+            <Fields.Legend htmlFor="city">Cidade</Fields.Legend>
+            <Select.Control
+              {...register('city')}
+              placeholder="Selecione sua região"
+              id="city"
+            >
+              <Select.Option value="1">Londrina</Select.Option>
+            </Select.Control>
 
-          {hasErrors('city') && (
-            <Fields.Errors errors={[errors.city?.message]} />
-          )}
-        </Fields.Root>
+            {hasErrors('city') && (
+              <Fields.Errors errors={[errors.city?.message]} />
+            )}
+          </Fields.Root>
+        </Container>
 
         <h2>Cadastre seu time</h2>
         <p>Atendemos até 6 pokémons por vez</p>
-        <Button type="button" $styleProps={{ width: { m: 28, d: 28 } }}>
+        <Button
+          type="button"
+          $styleProps={{ width: { m: 28, d: 28 }, isTransparent: true }}
+          style={{ border: 'solid 1px #1D1D1D' }}
+        >
           Adicionar novo pokémon ao time... +
         </Button>
 
-        <Fields.Root>
-          <Fields.Legend htmlFor="schedulingDate">
-            Data para Atendimento
-          </Fields.Legend>
-          <Select.Control
-            {...register('schedulingDate')}
-            placeholder="Selecione sua região"
-            id="schedulingDate"
-          >
-            <Select.Option value="1">12/04/04</Select.Option>
-          </Select.Control>
+        <Container $styleProps={styles}>
+          <Fields.Root>
+            <Fields.Legend htmlFor="schedulingDate">
+              Data para Atendimento
+            </Fields.Legend>
+            <Select.Control
+              {...register('schedulingDate')}
+              placeholder="Selecione sua região"
+              id="schedulingDate"
+            >
+              <Select.Option value="1">12/04/04</Select.Option>
+            </Select.Control>
 
-          {hasErrors('schedulingDate') && (
-            <Fields.Errors errors={[errors.schedulingDate?.message]} />
-          )}
-        </Fields.Root>
+            {hasErrors('schedulingDate') && (
+              <Fields.Errors errors={[errors.schedulingDate?.message]} />
+            )}
+          </Fields.Root>
 
-        <Fields.Root>
-          <Fields.Legend htmlFor="schedulingTime">
-            Horário de Atendimento
-          </Fields.Legend>
-          <Select.Control
-            {...register('schedulingTime')}
-            placeholder="Selecione sua região"
-            id="schedulingTime"
-          >
-            <Select.Option value="1">12/04/04</Select.Option>
-          </Select.Control>
+          <Fields.Root>
+            <Fields.Legend htmlFor="schedulingTime">
+              Horário de Atendimento
+            </Fields.Legend>
+            <Select.Control
+              {...register('schedulingTime')}
+              placeholder="Selecione sua região"
+              id="schedulingTime"
+            >
+              <Select.Option value="1">12/04/04</Select.Option>
+            </Select.Control>
 
-          {hasErrors('schedulingTime') && (
-            <Fields.Errors errors={[errors.schedulingTime?.message]} />
-          )}
-        </Fields.Root>
+            {hasErrors('schedulingTime') && (
+              <Fields.Errors errors={[errors.schedulingTime?.message]} />
+            )}
+          </Fields.Root>
+        </Container>
 
         <hr />
 
@@ -220,7 +228,7 @@ export default function Schedule({ ...props }: HomeProps) {
           <h1>Valor Total: R$ 72,10</h1>
           <Button type="submit">Concluir Agendamento</Button>
         </div>
-      </form>
+      </Form>
     </Container>
   );
 }

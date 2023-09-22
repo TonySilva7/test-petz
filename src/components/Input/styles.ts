@@ -9,6 +9,7 @@ export const ControlWrapper = styled.input`
   color: ${({ theme }) => theme.colors.lightBlack};
   font-size: 1.4rem;
   font-weight: 500;
+  width: 100%;
 
   &::placeholder {
     font-size: 1.4rem;

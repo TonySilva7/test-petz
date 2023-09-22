@@ -4,7 +4,7 @@ export const RootWrapper = styled.div`
   display: flex;
   flex-direction: column;
   row-gap: 1rem;
-  max-width: 26.5rem;
+  min-width: 26.5rem;
 `;
 
 export const LegendWrapper = styled.label`
