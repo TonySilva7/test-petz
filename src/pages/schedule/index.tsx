@@ -1,5 +1,6 @@
 import { STYLES } from '@/@redux/features';
 import * as S from '@/@redux/store';
+import { SCHEDULE } from '@/api';
 import { Button } from '@/components/Button';
 import { Container } from '@/components/Container';
 import { IStylesProps } from '@/components/Container/styles';
@@ -10,12 +11,14 @@ import * as Input from '@/components/Input';
 import * as Select from '@/components/Select';
 import { Text } from '@/components/Text';
 import { yupResolver } from '@hookform/resolvers/yup';
+import { GetServerSideProps, InferGetServerSidePropsType } from 'next';
 import { ComponentProps, useEffect } from 'react';
 import { useFieldArray, useForm } from 'react-hook-form';
 import { useTheme } from 'styled-components';
 import * as Yup from 'yup';
 
-type HomeProps = ComponentProps<'main'>;
+type HomeProps = ComponentProps<'main'> &
+  InferGetServerSidePropsType<typeof getServerSideProps>;
 
 type IFormSchedule = {
   firstName: string;
@@ -27,7 +30,14 @@ type IFormSchedule = {
   schedulingTime: string;
 };
 
-export default function Schedule({ ...props }: HomeProps) {
+export default function Schedule({
+  listDate,
+  listTime,
+  listPokemon,
+  listRegion,
+  listCity,
+  ...props
+}: HomeProps) {
   const dispatch = S.useAppDispatch();
 
   const fnSchema = () => {
@@ -147,6 +157,20 @@ export default function Schedule({ ...props }: HomeProps) {
     append({ pokemon: '' });
   };
 
+  const handleName = (name: string) => {
+    if (name.includes('-')) {
+      const nameSplit = name.split('-');
+      const namePascal = nameSplit.map((name) => {
+        return name.charAt(0).toUpperCase() + name.slice(1);
+      });
+
+      const nameJoin = namePascal.join(' ');
+      return nameJoin;
+    }
+
+    return name.charAt(0).toUpperCase() + name.slice(1);
+  };
+
   return (
     <Container
       as="main"
@@ -204,8 +228,14 @@ export default function Schedule({ ...props }: HomeProps) {
               placeholder="Selecione sua região"
               id="region"
             >
-              <Select.Option value="">Selecione sua região</Select.Option>
-              <Select.Option value="1">Paraná</Select.Option>
+              <Select.Option id="default" value="" disabled selected>
+                Selecione sua região
+              </Select.Option>
+              {listRegion.map((region: IResult) => (
+                <Select.Option value={region.name} key={region.name}>
+                  {handleName(region.name)}
+                </Select.Option>
+              ))}
             </Select.Control>
 
             {hasErrors('region') && (
@@ -217,10 +247,17 @@ export default function Schedule({ ...props }: HomeProps) {
             <Fields.Legend htmlFor="city">Cidade</Fields.Legend>
             <Select.Control
               {...register('city')}
-              placeholder="Selecione sua região"
+              placeholder="Selecione sua cidade"
               id="city"
             >
-              <Select.Option value="1">Londrina</Select.Option>
+              <Select.Option id="default" value="" disabled selected>
+                Selecione sua cidade
+              </Select.Option>
+              {listCity.map((city: IResult) => (
+                <Select.Option value={city.name} key={city.name}>
+                  {handleName(city.name)}
+                </Select.Option>
+              ))}
             </Select.Control>
 
             {hasErrors('city') && (
@@ -326,9 +363,14 @@ export default function Schedule({ ...props }: HomeProps) {
                     placeholder="Selecione seu pokémon"
                     id={`pokemonTeam[${index}].pokemon`}
                   >
-                    <Select.Option value="1">Pokemon 01</Select.Option>
-                    <Select.Option value="2">Pokemon 02</Select.Option>
-                    <Select.Option value="3">Pokemon 03</Select.Option>
+                    <Select.Option id="default" value="" disabled selected>
+                      Selecione seu pokémon
+                    </Select.Option>
+                    {listPokemon.map((pokemon: IResult) => (
+                      <Select.Option value={pokemon.name} key={pokemon.name}>
+                        {handleName(pokemon.name)}
+                      </Select.Option>
+                    ))}
                   </Select.Control>
                 </Container>
                 <Button
@@ -378,10 +420,18 @@ export default function Schedule({ ...props }: HomeProps) {
             </Fields.Legend>
             <Select.Control
               {...register('schedulingDate')}
-              placeholder="Selecione sua região"
+              placeholder="Selecione uma data"
               id="schedulingDate"
             >
-              <Select.Option value="1">12/04/04</Select.Option>
+              <Select.Option value="" disabled selected>
+                Selecione uma data
+              </Select.Option>
+
+              {listDate.map((date: string) => (
+                <Select.Option value={date} key={date}>
+                  {date}
+                </Select.Option>
+              ))}
             </Select.Control>
 
             {hasErrors('schedulingDate') && (
@@ -395,10 +445,17 @@ export default function Schedule({ ...props }: HomeProps) {
             </Fields.Legend>
             <Select.Control
               {...register('schedulingTime')}
-              placeholder="Selecione sua região"
+              placeholder="Selecione um horário"
               id="schedulingTime"
             >
-              <Select.Option value="1">12/04/04</Select.Option>
+              <Select.Option id="default" value="" disabled selected>
+                Selecione um horário
+              </Select.Option>
+              {listTime.map((time: string) => (
+                <Select.Option value={time} key={time}>
+                  {time}
+                </Select.Option>
+              ))}
             </Select.Control>
 
             {hasErrors('schedulingTime') && (
@@ -496,3 +553,47 @@ export default function Schedule({ ...props }: HomeProps) {
 }
 
 export { type HomeProps };
+
+type IResult = {
+  name: string;
+  url: string;
+};
+type IApiPokemon = {
+  count: number;
+  next: string;
+  previous: string | null;
+  results: Array<IResult>;
+};
+
+export const getServerSideProps: GetServerSideProps<{
+  listDate: Array<string>;
+  listTime: Array<string>;
+  listPokemon: Array<IResult>;
+  listRegion: Array<IResult>;
+  listCity: Array<IResult>;
+}> = async () => {
+  const resDate = await SCHEDULE.schedule.getDate();
+  const listDate: Array<string> = resDate.data;
+
+  const resTime = await SCHEDULE.schedule.getTime();
+  const listTime: Array<string> = resTime.data;
+
+  const resPokemon = await SCHEDULE.schedule.getPokemons();
+  const dataPokemons: IApiPokemon = resPokemon.data;
+
+  const resRegion = await SCHEDULE.schedule.getRegion();
+  const dataRegion: IApiPokemon = resRegion.data;
+
+  const resCity = await SCHEDULE.schedule.getCity();
+  const dataCity: IApiPokemon = resCity.data;
+
+  return {
+    props: {
+      listDate,
+      listTime,
+      listPokemon: dataPokemons.results,
+      listRegion: dataRegion.results,
+      listCity: dataCity.results,
+    },
+  };
+};

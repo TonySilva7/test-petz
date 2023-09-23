@@ -1,9 +1,11 @@
-import { ComponentProps, useEffect } from 'react';
-import { AboutWrapper } from './styles';
-import * as S from '@/@redux/store';
 import { STYLES } from '@/@redux/features';
+import * as S from '@/@redux/store';
+import { Container } from '@/components/Container';
+import { Text } from '@/components/Text';
+import { TextWrapperProps } from '@/components/Text/styles';
+import { ComponentProps, useEffect } from 'react';
 
-type AboutProps = ComponentProps<'div'>;
+type AboutProps = ComponentProps<'main'>;
 
 export default function About({ ...props }: AboutProps) {
   const dispatch = S.useAppDispatch();
@@ -17,12 +19,45 @@ export default function About({ ...props }: AboutProps) {
     );
   }, [dispatch]);
 
-  return (
-    <AboutWrapper {...props}>
-      <h1>O Centro Pokémon</h1>
+  const h3Styles: TextWrapperProps = {
+    fontSize: 1.6,
+    fontWeight: 500,
+  };
 
-      <h3>Como funciona a cura de um pokémon?</h3>
-      <p>
+  const pStyles: TextWrapperProps = {
+    fontSize: 1.4,
+    fontWeight: 500,
+    $textAlign: 'justify',
+  };
+
+  return (
+    <Container
+      as="main"
+      {...props}
+      $styleProps={{
+        d: {
+          display: 'flex',
+          'flex-direction': 'column',
+          width: '33%',
+          padding: '4rem 0',
+          gap: '1.5rem',
+        },
+        m: {
+          display: 'flex',
+          'flex-direction': 'column',
+          gap: '1.5rem',
+          padding: '4rem 1rem',
+        },
+      }}
+    >
+      <Text fontSize={1.8} fontWeight={600}>
+        O Centro Pokémon
+      </Text>
+
+      <Text as="h3" {...h3Styles}>
+        Como funciona a cura de um pokémon?
+      </Text>
+      <Text as="p" {...pStyles}>
         Lorem ipsum dolor sit amet, consectetur adipiscing elit. Vestibulum vel
         mi ut nunc sodales mattis eget at sem. Praesent mattis interdum nulla,
         quis molestie justo lacinia a. Curabitur rutrum ante a ligula aliquet
@@ -43,21 +78,25 @@ export default function About({ ...props }: AboutProps) {
         Aenean nec libero leo. Nullam dignissim augue a lacinia porttitor.
         Curabitur sed est sed metus gravida aliquet. Suspendisse potenti.
         Praesent condimentum pellentesque efficitur. Maecenas vel risus diam.
-      </p>
+      </Text>
 
-      <h3>Uma tradição de mais de 20</h3>
-      <p>
-        anos Etiam ac nisi sagittis, ullamcorper ex vel, dignissim urna. Mauris
+      <Text as="h3" {...h3Styles}>
+        Uma tradição de mais de 20 anos
+      </Text>
+      <Text as="p" {...pStyles}>
+        Etiam ac nisi sagittis, ullamcorper ex vel, dignissim urna. Mauris
         commodo diam ac purus elementum, nec molestie arcu tincidunt. Donec quis
         sollicitudin sapien, vitae tincidunt lorem. Sed vel est et orci pharetra
         interdum. Donec felis mauris, faucibus in hendrerit sed, malesuada vitae
         mi. Ut nec tellus ut lorem tincidunt iaculis. Mauris vulputate in ante
         at ultrices. Phasellus non ligula nec dolor suscipit dapibus nec at
         enim.
-      </p>
+      </Text>
 
-      <h3>O melhor para seu pokémon</h3>
-      <p>
+      <Text as="h3" {...h3Styles}>
+        O melhor para seu pokémon
+      </Text>
+      <Text as="p" {...pStyles}>
         Quisque porta cursus metus, id posuere mi commodo ac. Proin auctor nisl
         eu mattis dignissim. Nullam efficitur, eros a sollicitudin dignissim,
         nunc risus sollicitudin nunc, vitae lacinia erat mi sed dui. Mauris ante
@@ -72,10 +111,12 @@ export default function About({ ...props }: AboutProps) {
         commodo posuere ipsum. Morbi bibendum vel nulla in ullamcorper. Sed
         ultricies, est sed molestie varius, dolor ipsum ultricies enim, at
         dapibus nulla erat eu purus. Pellentesque non ultrices nulla.
-      </p>
+      </Text>
 
-      <h3>Alta Tecnologia</h3>
-      <p>
+      <Text as="h3" {...h3Styles}>
+        Alta Tecnologia
+      </Text>
+      <Text as="p" {...pStyles}>
         Fusce vitae ex pharetra, gravida turpis in, pretium dui. Nulla fringilla
         odio sed dolor varius cursus vitae at lectus. Aenean fermentum ligula
         sed tincidunt venenatis. Mauris quis ligula lacus. Integer viverra
@@ -84,8 +125,8 @@ export default function About({ ...props }: AboutProps) {
         mauris fringilla porttitor vitae eget neque. Vivamus eget dictum dolor.
         Nullam in ullamcorper purus, vel pulvinar ex. Cras posuere feugiat
         auctor. Mauris sodales dolor quis rhoncus hendrerit.
-      </p>
-    </AboutWrapper>
+      </Text>
+    </Container>
   );
 }
 

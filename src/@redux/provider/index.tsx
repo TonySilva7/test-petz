@@ -1,4 +1,4 @@
-import { setupStore } from '@/@redux/store';
+import { makeStore } from '@/@redux/store';
 import { Provider } from 'react-redux';
 
 type ProviderReduxProps = {
@@ -6,6 +6,6 @@ type ProviderReduxProps = {
 };
 
 export const ProviderRedux = ({ children }: ProviderReduxProps) => {
-  const store = setupStore();
+  const store = makeStore();
   return <Provider store={store}>{children}</Provider>;
 };

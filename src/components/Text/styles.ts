@@ -6,6 +6,7 @@ export type TextWrapperProps = {
   fontSize?: number;
   fontWeight?: number;
   width?: string;
+  $textAlign?: 'left' | 'center' | 'right' | 'justify';
 };
 
 export const TextWrapper = styled.h1<TextWrapperProps>`
@@ -14,6 +15,6 @@ export const TextWrapper = styled.h1<TextWrapperProps>`
   color: ${({ theme, color }) => color || theme.colors.lightBlack};
 
   ${Medias.mobile} {
-    text-align: center;
+    text-align: ${({ $textAlign }) => $textAlign || 'center'};
   }
 `;

@@ -6,7 +6,7 @@ type IMainStyles = {
   display?: 'flex' | 'inline-flex' | 'block' | 'inline-block' | 'none';
   'flex-direction'?: 'row' | 'column' | 'row-reverse' | 'column-reverse';
   'align-items'?: 'flex-start' | 'center' | 'flex-end' | 'stretch';
-  'text-align'?: 'left' | 'center' | 'right';
+  'text-align'?: 'left' | 'center' | 'right' | 'justify';
   'justify-content'?:
     | 'flex-start'
     | 'flex-end'

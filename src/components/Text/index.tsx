@@ -13,6 +13,7 @@ function Text({
   fontSize,
   fontWeight,
   color,
+  $textAlign,
   ...props
 }: TextProps) {
   return (
@@ -21,6 +22,7 @@ function Text({
       color={color}
       fontSize={fontSize}
       fontWeight={fontWeight}
+      $textAlign={$textAlign}
       {...props}
     >
       {children}

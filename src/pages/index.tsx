@@ -11,8 +11,6 @@ export default function Home() {
   const { windowSize } = useWindowSize();
 
   useEffect(() => {
-    // if (windowSize.width === undefined || windowSize.width < 768) return;
-
     dispatch(STYLES.shrinkHomeButton(true));
     setTimeout(() => {
       dispatch(STYLES.shrinkHomeButton(false));
@@ -32,3 +30,17 @@ export default function Home() {
     </>
   );
 }
+
+// export const getServerSideProps = S.wrapper.getServerSideProps(
+//   (store) =>
+//     async ({ resolvedUrl }) => {
+//       const { dispatch } = store;
+
+//       dispatch(setProfileData('Tony Hello'));
+//       dispatch(setAge({ age: 42 }));
+
+//       return {
+//         props: { resolvedUrl },
+//       };
+//     },
+// );

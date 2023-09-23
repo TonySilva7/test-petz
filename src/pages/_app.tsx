@@ -6,16 +6,22 @@ import { ThemeProvider } from 'styled-components';
 import { ProviderRedux } from '@/@redux/provider';
 import { GlobalStyle } from '@/styles/GlobalStyle';
 import { Footer } from '@/components/Footer';
+import { wrapper } from '@/@redux/store';
+import { Provider } from 'react-redux';
 
-export default function App({ Component, pageProps }: AppProps) {
+function App({ Component, ...rest }: AppProps) {
+  const { store, props } = wrapper.useWrappedStore(rest);
+  const { pageProps } = props;
   return (
-    <ProviderRedux>
+    <Provider store={store}>
       <ThemeProvider theme={theme}>
         <GlobalStyle />
         <Header />
         <Component {...pageProps} />
         <Footer />
       </ThemeProvider>
-    </ProviderRedux>
+    </Provider>
   );
 }
+
+export default App;

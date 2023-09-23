@@ -41,6 +41,13 @@ export const userSlice = createSlice({
       state.user.email = '';
       state.user.avatarUrl = '';
     },
+    handleMeuTeste: (state, action: PayloadAction<{ name: string }>) => {
+      state.status = 'idle';
+      state.user.id = 0;
+      state.user.name = action.payload.name;
+      state.user.email = '';
+      state.user.avatarUrl = '';
+    },
   },
 
   extraReducers: (builder: ActionReducerMapBuilder<T.IUserState>) => {
@@ -64,7 +71,7 @@ export const userSlice = createSlice({
   },
 });
 
-export const { resetUsers } = userSlice.actions;
+export const { resetUsers, handleMeuTeste } = userSlice.actions;
 
 export const selectUsers = (state: RootState): T.IUserState =>
   state.userReducer;

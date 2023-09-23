@@ -5,7 +5,7 @@ import { render } from '@testing-library/react';
 import React, { PropsWithChildren } from 'react';
 import { Provider } from 'react-redux';
 
-import { setupStore, type AppStore, type RootState } from '@/@redux/store';
+import { makeStore, type AppStore, type RootState } from '@/@redux/store';
 import { GlobalStyle } from '@/styles/GlobalStyle';
 import { theme } from '@/styles/theme';
 import { ThemeProvider } from 'styled-components';
@@ -15,7 +15,6 @@ import { ThemeProvider } from 'styled-components';
  * as allows the user to specify other things such as initialState, store.
  */
 interface ExtendedRenderOptions extends Omit<RenderOptions, 'queries'> {
-  preloadedState?: PreloadedState<RootState>;
   store?: AppStore;
 }
 
@@ -24,11 +23,7 @@ interface ExtendedRenderOptions extends Omit<RenderOptions, 'queries'> {
  */
 export function renderWithProviders(
   ui: React.ReactElement,
-  {
-    preloadedState = {},
-    store = setupStore(preloadedState),
-    ...renderOptions
-  }: ExtendedRenderOptions = {},
+  { store = makeStore(), ...renderOptions }: ExtendedRenderOptions = {},
 ) {
   function Wrapper({ children }: PropsWithChildren<object>): JSX.Element {
     return (

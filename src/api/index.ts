@@ -1,4 +1,5 @@
-import { http } from './config';
-import * as USER from './users';
+import { USER } from '@/@redux/features';
+import { apiLocalHttp, apiPokemonHttp } from './config';
+import * as SCHEDULE from './schedule';
 
-export { http, USER };
+export { apiLocalHttp, apiPokemonHttp, USER, SCHEDULE };

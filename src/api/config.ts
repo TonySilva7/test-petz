@@ -3,14 +3,14 @@ import type {
   AxiosResponse,
   InternalAxiosRequestConfig,
 } from 'axios';
-import axios from 'axios';
+import axios, { AxiosInstance } from 'axios';
 
 /**
  * Request Success Handler
  */
 const requestSuccessHandler = (config: InternalAxiosRequestConfig) => {
   // add token and continue
-  const token = localStorage.getItem('token');
+  const token = 'meu_token';
 
   if (token && config.headers && !config.headers.Authorization) {
     config.headers.Authorization = `Bearer ${token}`;
@@ -30,8 +30,6 @@ const requestErrorHandler = (err: AxiosError) => {
  * Response Success Handler
  */
 const responseSuccessHandler = (res: AxiosResponse) => {
-  // const data = res.data;
-
   if (res.status >= 200 && res.status < 300) {
     return res;
   } else {
@@ -47,32 +45,36 @@ const responseErrorHandler = (err: AxiosResponse) => {
 };
 
 /**
- * Axios
+ * Function to create Axios instance with a given base URL
  */
-const http = axios.create({
-  baseURL: process.env.API_URL as string,
-  timeout: 5000,
+const createAxiosInstance = (baseURL: string): AxiosInstance => {
+  const instance = axios.create({
+    baseURL,
+    timeout: 10_000,
+    headers: {
+      'Content-Type': 'application/json',
+      Accept: 'application/json',
+    },
+  });
 
-  headers: {
-    'Content-Type': 'application/json',
-    Accept: 'application/json',
-  },
-});
+  instance.interceptors.request.use(
+    (config: InternalAxiosRequestConfig) => requestSuccessHandler(config),
+    (err: AxiosError) => requestErrorHandler(err),
+  );
 
-/**
- * Axios Request Middleware
- */
-http.interceptors.request.use(
-  (config: InternalAxiosRequestConfig) => requestSuccessHandler(config),
-  (err: AxiosError) => requestErrorHandler(err),
-);
+  instance.interceptors.response.use(
+    (res) => responseSuccessHandler(res),
+    (err: AxiosResponse) => responseErrorHandler(err),
+  );
 
-/**
- * Axios Response Middleware
- */
-http.interceptors.response.use(
-  (res) => responseSuccessHandler(res),
-  (err: AxiosResponse) => responseErrorHandler(err),
-);
+  return instance;
+};
 
-export { http };
+// const apiLocalBaseUrl = 'http://localhost:3000/api/scheduling';
+const apiLocalBaseUrl = process.env.API_URL_LOCAL as string;
+const apiPokemonBaseUrl = process.env.API_URL_POKEMON as string;
+
+const apiLocalHttp = createAxiosInstance(apiLocalBaseUrl);
+const apiPokemonHttp = createAxiosInstance(apiPokemonBaseUrl);
+
+export { apiLocalHttp, apiPokemonHttp };

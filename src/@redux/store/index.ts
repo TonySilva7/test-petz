@@ -1,28 +1,29 @@
 import usersSlice from '../features/users';
 import stylesSlice from '../features/styles';
+import { ProfileSlice } from '../features/profile';
 import {
   Action,
   combineReducers,
   configureStore,
-  PreloadedState,
   ThunkAction,
 } from '@reduxjs/toolkit';
+import { createWrapper } from 'next-redux-wrapper';
 
 const rootReducer = combineReducers({
+  [ProfileSlice.name]: ProfileSlice.reducer,
   userReducer: usersSlice,
   stylesReducer: stylesSlice,
 });
 
 export type RootState = ReturnType<typeof rootReducer>;
 
-export function setupStore(preloadedState?: PreloadedState<RootState>) {
+export function makeStore() {
   return configureStore({
     reducer: rootReducer,
-    preloadedState,
     devTools: process.env.NODE_ENV !== 'production',
   });
 }
-export type AppStore = ReturnType<typeof setupStore>;
+export type AppStore = ReturnType<typeof makeStore>;
 export type AppDispatch = AppStore['dispatch'];
 export type AppThunk<ReturnType = void> = ThunkAction<
   ReturnType,
@@ -30,5 +31,10 @@ export type AppThunk<ReturnType = void> = ThunkAction<
   unknown,
   Action<string>
 >;
+
+export const wrapper = createWrapper<AppStore>(makeStore, {
+  debug: process.env.NODE_ENV !== 'production',
+});
+
 export * from './hooks';
 export * from '../test-util';
