@@ -3,6 +3,7 @@ import * as S from '@/@redux/store';
 import { Button } from '@/components/Button';
 import { Container } from '@/components/Container';
 import { IStylesProps } from '@/components/Container/styles';
+import { Divider } from '@/components/Divider';
 import * as Fields from '@/components/Fields';
 import { Form } from '@/components/Form';
 import * as Input from '@/components/Input';
@@ -241,28 +242,23 @@ export default function Schedule({ ...props }: HomeProps) {
             </Text>
           </Container>
           {fields.map((field, index) => (
-            <Container
+            <Fields.Root
               key={field.id}
               $styleProps={{
-                m: {
-                  display: 'flex',
-                  'flex-direction': 'column',
-                },
+                ...selectStyles,
                 d: {
                   display: 'flex',
-                  'flex-direction': 'row',
+                  'flex-direction': 'column',
+                  flex: '1 1 100%',
                   'justify-content': 'center',
-                  'align-items': 'center',
-                  gap: '0 0.5rem',
+                  gap: '1rem',
                 },
               }}
             >
-              <Fields.Root
+              <Container
                 $styleProps={{
-                  ...selectStyles,
                   d: {
-                    display: 'inline-flex',
-                    flex: '1 1 auto',
+                    display: 'flex',
                     'align-items': 'center',
                   },
                 }}
@@ -285,36 +281,34 @@ export default function Schedule({ ...props }: HomeProps) {
                   <Select.Option value="3">Pokemon 03</Select.Option>
                 </Select.Control>
 
-                {hasErrors(
-                  `pokemonTeam[${index}].pokemon` as keyof IFormSchedule,
-                ) && (
-                  <Fields.Errors
-                    errors={[
-                      errors.pokemonTeam?.[index]?.pokemon?.message ?? '',
-                    ]}
-                  />
-                )}
-              </Fields.Root>
-
-              <Button
-                type="button"
-                $styleProps={{
-                  width: { m: 3, d: 3 },
-                  height: { m: 3, d: 3 },
-                  isTransparent: true,
-                }}
-                onClick={() => remove(index)}
-              >
-                <Text
-                  as="p"
-                  fontSize={2}
-                  fontWeight={500}
-                  color={theme.colors.lightBlack}
+                <Button
+                  type="button"
+                  $styleProps={{
+                    width: { m: 3, d: 3 },
+                    height: { m: 3, d: 3 },
+                    isTransparent: true,
+                  }}
+                  onClick={() => remove(index)}
                 >
-                  &times;
-                </Text>
-              </Button>
-            </Container>
+                  <Text
+                    as="p"
+                    fontSize={2}
+                    fontWeight={500}
+                    color={theme.colors.lightBlack}
+                  >
+                    &times;
+                  </Text>
+                </Button>
+              </Container>
+
+              {hasErrors(
+                `pokemonTeam[${index}].pokemon` as keyof IFormSchedule,
+              ) && (
+                <Fields.Errors
+                  errors={[errors.pokemonTeam?.[index]?.pokemon?.message ?? '']}
+                />
+              )}
+            </Fields.Root>
           ))}
 
           <Button
@@ -363,7 +357,7 @@ export default function Schedule({ ...props }: HomeProps) {
           </Fields.Root>
         </Container>
 
-        <hr />
+        <Divider margin={'1rem 0'} />
 
         <Container $styleProps={resumeScheduleStyles}>
           <Text {...textStyles}>Número de pokémons a serem atendidos:</Text>
@@ -381,12 +375,20 @@ export default function Schedule({ ...props }: HomeProps) {
           <Text {...textStyles}>Taxa geracional*:</Text>
           <Text {...textStyles}>R$ 2,10</Text>
         </Container>
-        <Container as={'small'}>
+        <Text as={'small'} fontSize={0.8} color={theme.colors.gray.medium}>
           *adicionamos uma taxa de 3%, multiplicado pelo número da geração mais
           alta do time, com limite de até 30%
-        </Container>
+        </Text>
 
-        <Container $styleProps={resumeScheduleStyles}>
+        <Container
+          $styleProps={{
+            ...resumeScheduleStyles,
+            d: {
+              ...resumeScheduleStyles.d,
+              padding: '2.5rem 0 0 0',
+            },
+          }}
+        >
           <Text>Valor Total: R$ 72,10</Text>
           <Button type="submit">Concluir Agendamento</Button>
         </Container>
