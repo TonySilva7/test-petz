@@ -1,3 +1,4 @@
+import { Medias } from '@/styles/medias';
 import styled from 'styled-components';
 
 export const FooterWrapper = styled.div`
@@ -9,4 +10,9 @@ export const FooterWrapper = styled.div`
   background-color: ${({ theme }) => theme.colors.lightBlack};
   align-items: center;
   justify-content: center;
+
+  ${Medias.mobile} {
+    text-align: center;
+    font-size: 1rem;
+  }
 `;

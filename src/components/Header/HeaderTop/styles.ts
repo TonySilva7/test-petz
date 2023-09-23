@@ -23,5 +23,6 @@ export const HeaderTopWrapper = styled.div`
 
   ${Medias.mobile} {
     padding: 0.5rem 1rem;
+    overflow-x: hidden;
   }
 `;
