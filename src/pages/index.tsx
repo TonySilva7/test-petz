@@ -3,17 +3,21 @@ import Head from 'next/head';
 import { STYLES } from '@/@redux/features';
 import * as S from '@/@redux/store';
 import { HomePage } from '@/containers/HomePage';
+import { useWindowSize } from '@/hooks/useWindow';
 import { useEffect } from 'react';
 
 export default function Home() {
   const dispatch = S.useAppDispatch();
+  const { windowSize } = useWindowSize();
 
   useEffect(() => {
+    // if (windowSize.width === undefined || windowSize.width < 768) return;
+
     dispatch(STYLES.shrinkHomeButton(true));
     setTimeout(() => {
       dispatch(STYLES.shrinkHomeButton(false));
     }, 5000);
-  }, [dispatch]);
+  }, [dispatch, windowSize.width]);
 
   return (
     <>

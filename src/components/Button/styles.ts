@@ -45,19 +45,19 @@ const styleBuilder = (styles: ButtonWrapperProps['$styleProps']) => {
         font-weight: ${styles?.fWeight?.d || 700};
         justify-content: flex-start;
         padding: 0 1.2rem;
-      }
 
-      &:hover {
-        width: 25.9rem;
-        padding: 0 1.2rem;
-        & > span {
-          &:last-child {
-            justify-content: center;
-            width: 100%;
-            font-size: 1.6rem;
-          }
-          &:first-child {
-            transform: rotate(180deg);
+        &:hover {
+          width: 25.9rem;
+          padding: 0 1.2rem;
+          & > span {
+            &:last-child {
+              justify-content: center;
+              width: 100%;
+              font-size: 1.6rem;
+            }
+            &:first-child {
+              transform: rotate(180deg);
+            }
           }
         }
       }

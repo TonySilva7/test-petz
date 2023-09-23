@@ -1,3 +1,4 @@
+import { Medias } from '@/styles/medias';
 import styled from 'styled-components';
 
 export const AboutWrapper = styled.div`
@@ -18,5 +19,11 @@ export const AboutWrapper = styled.div`
   & > p {
     font-size: 1.4rem;
     font-weight: 500;
+  }
+
+  ${Medias.mobile} {
+    margin-top: 4rem;
+    max-width: 100%;
+    padding: 0 2rem;
   }
 `;

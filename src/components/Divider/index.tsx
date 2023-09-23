@@ -4,7 +4,16 @@ import { DividerWrapper, DividerWrapperProps } from './styles';
 type DividerProps = ComponentProps<'hr'> & DividerWrapperProps;
 
 function Divider({ ...props }: DividerProps) {
-  return <DividerWrapper {...props} />;
+  const { $width, $height, $margin, $backgroundColor } = props;
+  return (
+    <DividerWrapper
+      $width={$width}
+      $height={$height}
+      $margin={$margin}
+      $backgroundColor={$backgroundColor}
+      {...props}
+    />
+  );
 }
 
 export { Divider, type DividerProps };

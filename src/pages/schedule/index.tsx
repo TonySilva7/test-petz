@@ -94,9 +94,12 @@ export default function Schedule({ ...props }: HomeProps) {
 
   const theme = useTheme();
 
-  const styles: IStylesProps = {
+  const containerStyles: IStylesProps = {
     m: {
-      background: `${theme.colors.primary.dark}`,
+      display: 'flex',
+      'flex-direction': 'column',
+      gap: '1rem 1rem',
+      'justify-content': 'space-between',
     },
     d: {
       display: 'flex',
@@ -115,6 +118,10 @@ export default function Schedule({ ...props }: HomeProps) {
   const resumeScheduleStyles: IStylesProps = {
     m: {
       display: 'flex',
+      'flex-direction': 'column',
+      'align-items': 'center',
+      gap: '2rem 0',
+      'justify-content': 'space-between',
     },
     d: {
       display: 'flex',
@@ -123,6 +130,11 @@ export default function Schedule({ ...props }: HomeProps) {
   };
 
   const selectStyles: IStylesProps = {
+    m: {
+      display: 'flex',
+      'flex-direction': 'column',
+      gap: '1rem',
+    },
     d: {
       display: 'flex',
       'flex-direction': 'column',
@@ -141,6 +153,10 @@ export default function Schedule({ ...props }: HomeProps) {
       $styleProps={{
         m: {
           width: '100%',
+          display: 'flex',
+          'flex-direction': 'column',
+          'align-items': 'center',
+          padding: '3rem 1rem',
         },
         d: {
           display: 'flex',
@@ -150,12 +166,11 @@ export default function Schedule({ ...props }: HomeProps) {
           padding: '3rem 0',
         },
       }}
-      style={{ border: 'solid 2px pink' }}
       {...props}
     >
       <Text>Preencha o formulário abaixo para agendar sua consulta</Text>
       <Form onSubmit={handleSubmit(submit)}>
-        <Container $styleProps={styles}>
+        <Container $styleProps={containerStyles}>
           <Fields.Root $styleProps={selectStyles}>
             <Fields.Legend htmlFor="firstName">Nome</Fields.Legend>
             <Input.Control
@@ -181,7 +196,7 @@ export default function Schedule({ ...props }: HomeProps) {
           </Fields.Root>
         </Container>
 
-        <Container $styleProps={styles}>
+        <Container $styleProps={containerStyles}>
           <Fields.Root $styleProps={selectStyles}>
             <Fields.Legend htmlFor="region">Região</Fields.Legend>
             <Select.Control
@@ -222,11 +237,19 @@ export default function Schedule({ ...props }: HomeProps) {
               padding: '1rem 0',
               gap: '2rem 1rem',
             },
+            m: {
+              display: 'flex',
+              'flex-direction': 'column',
+              'align-items': 'center',
+              padding: '1rem 0',
+              gap: '2rem 1rem',
+            },
           }}
         >
           <Container
             $styleProps={{
               d: { display: 'flex', 'flex-direction': 'column', gap: '1rem 0' },
+              m: { display: 'flex', 'flex-direction': 'column', gap: '1rem 0' },
             }}
           >
             <Text fontSize={1.2} fontWeight={700}>
@@ -253,6 +276,12 @@ export default function Schedule({ ...props }: HomeProps) {
                   'justify-content': 'center',
                   gap: '1rem',
                 },
+                m: {
+                  display: 'flex',
+                  'flex-direction': 'column',
+                  width: '100%',
+                  gap: '1rem',
+                },
               }}
             >
               <Container
@@ -261,26 +290,47 @@ export default function Schedule({ ...props }: HomeProps) {
                     display: 'flex',
                     'align-items': 'center',
                   },
+                  m: {
+                    display: 'inline-flex',
+                    width: '100%',
+                    flex: '1 1 100%',
+                    'align-items': 'center',
+                  },
                 }}
               >
-                <Fields.Legend
-                  width="8.5rem"
-                  htmlFor={`pokemonTeam[${index}].pokemon`}
+                <Container
+                  $styleProps={{
+                    d: {
+                      display: 'flex',
+                      flex: '1 1 auto',
+                      'align-items': 'center',
+                    },
+                    m: {
+                      display: 'flex',
+                      'flex-direction': 'column',
+                      flex: '1 1 auto',
+                      gap: '1rem',
+                    },
+                  }}
                 >
-                  {`Pokémon ${index + 1}`}
-                </Fields.Legend>
-                <Select.Control
-                  {...register(
-                    `pokemonTeam[${index}].pokemon` as keyof IFormSchedule,
-                  )}
-                  placeholder="Selecione seu pokémon"
-                  id={`pokemonTeam[${index}].pokemon`}
-                >
-                  <Select.Option value="1">Pokemon 01</Select.Option>
-                  <Select.Option value="2">Pokemon 02</Select.Option>
-                  <Select.Option value="3">Pokemon 03</Select.Option>
-                </Select.Control>
-
+                  <Fields.Legend
+                    width="8.5rem"
+                    htmlFor={`pokemonTeam[${index}].pokemon`}
+                  >
+                    {`Pokémon ${index + 1}`}
+                  </Fields.Legend>
+                  <Select.Control
+                    {...register(
+                      `pokemonTeam[${index}].pokemon` as keyof IFormSchedule,
+                    )}
+                    placeholder="Selecione seu pokémon"
+                    id={`pokemonTeam[${index}].pokemon`}
+                  >
+                    <Select.Option value="1">Pokemon 01</Select.Option>
+                    <Select.Option value="2">Pokemon 02</Select.Option>
+                    <Select.Option value="3">Pokemon 03</Select.Option>
+                  </Select.Control>
+                </Container>
                 <Button
                   type="button"
                   $styleProps={{
@@ -313,7 +363,7 @@ export default function Schedule({ ...props }: HomeProps) {
 
           <Button
             type="button"
-            $styleProps={{ width: { m: 28, d: 28 }, isTransparent: true }}
+            $styleProps={{ width: { m: 30, d: 28 }, isTransparent: true }}
             style={{ border: 'solid 1px #1D1D1D' }}
             onClick={handleAddFields}
           >
@@ -321,7 +371,7 @@ export default function Schedule({ ...props }: HomeProps) {
           </Button>
         </Container>
 
-        <Container $styleProps={styles}>
+        <Container $styleProps={containerStyles}>
           <Fields.Root $styleProps={selectStyles}>
             <Fields.Legend htmlFor="schedulingDate">
               Data para Atendimento
@@ -357,28 +407,69 @@ export default function Schedule({ ...props }: HomeProps) {
           </Fields.Root>
         </Container>
 
-        <Divider margin={'1rem 0'} />
+        <Divider $margin={'1rem 0'} />
 
-        <Container $styleProps={resumeScheduleStyles}>
+        <Container
+          $styleProps={{
+            ...resumeScheduleStyles,
+            m: {
+              ...resumeScheduleStyles.m,
+              'flex-direction': 'row',
+            },
+          }}
+        >
           <Text {...textStyles}>Número de pokémons a serem atendidos:</Text>
           <Text {...textStyles}>01</Text>
         </Container>
-        <Container $styleProps={resumeScheduleStyles}>
+        <Container
+          $styleProps={{
+            ...resumeScheduleStyles,
+            m: {
+              ...resumeScheduleStyles.m,
+              'flex-direction': 'row',
+            },
+          }}
+        >
           <Text {...textStyles}>Atendimento unitário por pokémon:</Text>
           <Text {...textStyles}>R$ 70,00</Text>
         </Container>
-        <Container $styleProps={resumeScheduleStyles}>
+        <Container
+          $styleProps={{
+            ...resumeScheduleStyles,
+            m: {
+              ...resumeScheduleStyles.m,
+              'flex-direction': 'row',
+            },
+          }}
+        >
           <Text {...textStyles}>Subtotal:</Text>
           <Text {...textStyles}>R$ 70,00</Text>
         </Container>
-        <Container $styleProps={resumeScheduleStyles}>
+        <Container
+          $styleProps={{
+            ...resumeScheduleStyles,
+            m: {
+              ...resumeScheduleStyles.m,
+              'flex-direction': 'row',
+            },
+          }}
+        >
           <Text {...textStyles}>Taxa geracional*:</Text>
           <Text {...textStyles}>R$ 2,10</Text>
         </Container>
-        <Text as={'small'} fontSize={0.8} color={theme.colors.gray.medium}>
-          *adicionamos uma taxa de 3%, multiplicado pelo número da geração mais
-          alta do time, com limite de até 30%
-        </Text>
+        <Container
+          $styleProps={{
+            m: {
+              padding: '0 6rem',
+              'text-align': 'center',
+            },
+          }}
+        >
+          <Text as={'small'} fontSize={0.8} color={theme.colors.gray.medium}>
+            *adicionamos uma taxa de 3%, multiplicado pelo número da geração
+            mais alta do time, com limite de até 30%
+          </Text>
+        </Container>
 
         <Container
           $styleProps={{
@@ -390,7 +481,14 @@ export default function Schedule({ ...props }: HomeProps) {
           }}
         >
           <Text>Valor Total: R$ 72,10</Text>
-          <Button type="submit">Concluir Agendamento</Button>
+          <Button
+            $styleProps={{
+              width: { m: 21, d: 19 },
+            }}
+            type="submit"
+          >
+            Concluir Agendamento
+          </Button>
         </Container>
       </Form>
     </Container>

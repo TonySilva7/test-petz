@@ -1,4 +1,5 @@
 import { createGlobalStyle } from 'styled-components';
+import { Medias } from './medias';
 
 export const GlobalStyle = createGlobalStyle`
   * {
@@ -22,6 +23,10 @@ export const GlobalStyle = createGlobalStyle`
       -webkit-font-smoothing: antialiased;
       -moz-osx-font-smoothing: grayscale;
       line-height: 1.1;
+
+      ${Medias.mobile} {
+        max-width: 100vw;
+      }
     }
 
     

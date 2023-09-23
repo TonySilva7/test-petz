@@ -7,6 +7,7 @@ import { HeaderTopWrapper } from './styles';
 import { ButtonWrapperProps } from '@/components/Button/styles';
 import { ButtonLink } from '@/components/ButtonLink';
 import { useRouter } from 'next/router';
+import { useWindowSize } from '@/hooks/useWindow';
 
 type HeaderTopProps = ComponentProps<'div'>;
 
@@ -20,6 +21,7 @@ const primaryButton: ButtonWrapperProps['$styleProps'] = {
 
 function HeaderTop({ ...props }: HeaderTopProps) {
   const { isLoadingHome } = S.useAppSelector(STYLES.selectStyles);
+  const { windowSize } = useWindowSize();
   const router = useRouter();
   const handleNavigate = () => {
     router.push('/');
@@ -36,7 +38,17 @@ function HeaderTop({ ...props }: HeaderTopProps) {
           <p>Centro Pokémon</p>
         </Button>
       </div>
-      <nav>
+
+      <nav
+        style={{
+          display:
+            isLoadingHome &&
+            windowSize.width !== undefined &&
+            windowSize.width < 768
+              ? 'none'
+              : 'flex',
+        }}
+      >
         <ButtonLink
           href="/about"
           $styleProps={{

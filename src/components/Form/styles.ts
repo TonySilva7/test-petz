@@ -1,3 +1,4 @@
+import { Medias } from '@/styles/medias';
 import styled from 'styled-components';
 
 export const FormWrapper = styled.form`
@@ -6,4 +7,8 @@ export const FormWrapper = styled.form`
   width: 40%;
   gap: 2rem 1rem;
   padding: 3rem 0;
+
+  ${Medias.mobile} {
+    width: 100%;
+  }
 `;
