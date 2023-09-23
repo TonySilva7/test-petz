@@ -19,6 +19,7 @@ export function setupStore(preloadedState?: PreloadedState<RootState>) {
   return configureStore({
     reducer: rootReducer,
     preloadedState,
+    devTools: process.env.NODE_ENV !== 'production',
   });
 }
 export type AppStore = ReturnType<typeof setupStore>;
