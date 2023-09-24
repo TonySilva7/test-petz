@@ -1,8 +1,8 @@
-import React from 'react';
+import React, { ElementType } from 'react';
 import { ButtonWrapper, ButtonWrapperProps } from './styles';
 
 type ButtonProps = ButtonWrapperProps & {
-  iconPrefix?: React.ElementType;
+  iconPrefix?: ElementType;
 };
 
 function Button({

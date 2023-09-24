@@ -16,15 +16,17 @@ type IMainStyles = {
     | 'space-evenly'
     | 'stretch';
   'flex-wrap'?: 'wrap' | 'nowrap' | 'wrap-reverse';
+  'min-height'?: string;
+  'border-radius'?: string;
   gap?: string;
   flex?: string;
   width?: string;
   height?: string;
-  'min-height'?: string;
   padding?: string;
   margin?: string;
   color?: string;
   background?: string;
+  border?: string;
 };
 
 export type IStylesProps = {

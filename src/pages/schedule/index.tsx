@@ -8,13 +8,14 @@ import { IStylesProps } from '@/components/Container/styles';
 import { Divider } from '@/components/Divider';
 import * as Fields from '@/components/Fields';
 import { Form } from '@/components/Form';
+import { IconSuccess } from '@/components/IconSuccess';
 import * as Input from '@/components/Input';
 import * as Select from '@/components/Select';
 import { Text } from '@/components/Text';
 import { yupResolver } from '@hookform/resolvers/yup';
 import { GetServerSideProps, InferGetServerSidePropsType } from 'next';
-import { ComponentProps, useEffect } from 'react';
-import { useFieldArray, useForm } from 'react-hook-form';
+import { ComponentProps, useEffect, useState } from 'react';
+import { set, useFieldArray, useForm } from 'react-hook-form';
 import { useTheme } from 'styled-components';
 import * as Yup from 'yup';
 
@@ -39,6 +40,10 @@ export default function Schedule({
   listCity,
   ...props
 }: HomeProps) {
+  const [statusCreateSchedule, setStatusCreateSchedule] = useState<
+    null | 'success' | 'error'
+  >(null);
+
   const dispatch = S.useAppDispatch();
 
   const fnSchema = () => {
@@ -62,10 +67,21 @@ export default function Schedule({
   const {
     register,
     handleSubmit,
+    getValues,
+    setValue,
     control,
     formState: { errors },
   } = useForm<IFormSchedule>({
     resolver: yupResolver(fnSchema()),
+    defaultValues: {
+      firstName: '',
+      lastName: '',
+      region: '',
+      city: '',
+      pokemonTeam: [],
+      schedulingDate: '',
+      schedulingTime: '',
+    },
   });
 
   const { fields, append, remove } = useFieldArray({
@@ -84,6 +100,7 @@ export default function Schedule({
 
   const submit = (data: IFormSchedule) => {
     alert(JSON.stringify(data));
+    setStatusCreateSchedule('success');
   };
 
   const hasErrors = (keyError: keyof IFormSchedule) => {
@@ -172,7 +189,23 @@ export default function Schedule({
     return name.charAt(0).toUpperCase() + name.slice(1);
   };
 
-  const status: 'success' | 'error' | null = 'error';
+  const handleNewScheduling = () => {
+    setValue('firstName', '');
+    setValue('lastName', '');
+    setValue('region', '');
+    setValue('city', '');
+    setValue('pokemonTeam', []);
+    setValue('schedulingDate', '');
+    setValue('schedulingTime', '');
+
+    setStatusCreateSchedule(null);
+  };
+
+  const handleSubTotal = () => {
+    const value = getValues('pokemonTeam');
+    const total = value ? value.length * 70.0 : 0;
+    return `R$ ${total.toFixed(2)}`;
+  };
 
   return (
     <Container
@@ -199,7 +232,7 @@ export default function Schedule({
       }}
       {...props}
     >
-      {status === null ? (
+      {statusCreateSchedule === null ? (
         <>
           <Text>Preencha o formulário abaixo para agendar sua consulta</Text>
           <Form onSubmit={handleSubmit(submit)}>
@@ -498,7 +531,7 @@ export default function Schedule({
               }}
             >
               <Text {...textStyles}>Número de pokémons a serem atendidos:</Text>
-              <Text {...textStyles}>01</Text>
+              <Text {...textStyles}>{getValues('pokemonTeam')?.length}</Text>
             </Container>
             <Container
               $styleProps={{
@@ -522,7 +555,7 @@ export default function Schedule({
               }}
             >
               <Text {...textStyles}>Subtotal:</Text>
-              <Text {...textStyles}>R$ 70,00</Text>
+              <Text {...textStyles}>{handleSubTotal()}</Text>
             </Container>
             <Container
               $styleProps={{
@@ -576,7 +609,16 @@ export default function Schedule({
           </Form>
         </>
       ) : (
-        <AlertDialog />
+        <AlertDialog
+          title="Consulta Agendada"
+          icon={IconSuccess}
+          message={`Seu agendamento para dia ${getValues(
+            'schedulingDate',
+          )}, às ${getValues('schedulingTime')},
+          para ${getValues('pokemonTeam')
+            ?.length} pokémons foi realizado com sucesso!`}
+          callback={handleNewScheduling}
+        />
       )}
     </Container>
   );
