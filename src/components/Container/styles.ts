@@ -20,6 +20,7 @@ type IMainStyles = {
   flex?: string;
   width?: string;
   height?: string;
+  'min-height'?: string;
   padding?: string;
   margin?: string;
   color?: string;
