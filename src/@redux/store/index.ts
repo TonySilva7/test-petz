@@ -1,6 +1,3 @@
-import usersSlice from '../features/users';
-import stylesSlice from '../features/styles';
-import { ProfileSlice } from '../features/profile';
 import {
   Action,
   combineReducers,
@@ -8,10 +5,13 @@ import {
   ThunkAction,
 } from '@reduxjs/toolkit';
 import { createWrapper } from 'next-redux-wrapper';
+import { pokemonSlice } from '../features/pokemons';
+import { ProfileSlice } from '../features/profile';
+import stylesSlice from '../features/styles';
 
 const rootReducer = combineReducers({
   [ProfileSlice.name]: ProfileSlice.reducer,
-  userReducer: usersSlice,
+  [pokemonSlice.name]: pokemonSlice.reducer,
   stylesReducer: stylesSlice,
 });
 
@@ -36,5 +36,5 @@ export const wrapper = createWrapper<AppStore>(makeStore, {
   debug: process.env.NODE_ENV !== 'production',
 });
 
-export * from './hooks';
 export * from '../test-util';
+export * from './hooks';

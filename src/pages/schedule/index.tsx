@@ -1,6 +1,7 @@
 import { STYLES } from '@/@redux/features';
 import * as S from '@/@redux/store';
-import { SCHEDULE } from '@/api';
+import * as F from '@/@redux/features';
+import * as API from '@/api';
 import { AlertDialog } from '@/components/AlertDialog';
 import { Button } from '@/components/Button';
 import { Container } from '@/components/Container';
@@ -14,8 +15,8 @@ import * as Select from '@/components/Select';
 import { Text } from '@/components/Text';
 import { yupResolver } from '@hookform/resolvers/yup';
 import { GetServerSideProps, InferGetServerSidePropsType } from 'next';
-import { ComponentProps, useEffect, useState } from 'react';
-import { set, useFieldArray, useForm } from 'react-hook-form';
+import { ComponentProps, use, useEffect, useState } from 'react';
+import { set, useFieldArray, useForm, useWatch } from 'react-hook-form';
 import { useTheme } from 'styled-components';
 import * as Yup from 'yup';
 
@@ -45,6 +46,7 @@ export default function Schedule({
   >(null);
 
   const dispatch = S.useAppDispatch();
+  const { highestGeneration } = S.useAppSelector(F.POKEMONS.selectPokemons);
 
   const fnSchema = () => {
     return Yup.object({
@@ -69,6 +71,7 @@ export default function Schedule({
     handleSubmit,
     getValues,
     setValue,
+    watch,
     control,
     formState: { errors },
   } = useForm<IFormSchedule>({
@@ -98,8 +101,28 @@ export default function Schedule({
     );
   }, [dispatch]);
 
+  const [consultedPokemon, setConsultedPokemon] = useState<string[]>([]);
+  const selectedPokemon = useWatch({
+    control,
+    name: 'pokemonTeam',
+    defaultValue: [],
+  });
+
+  useEffect(() => {
+    if (!selectedPokemon?.length) return;
+
+    selectedPokemon.forEach((field) => {
+      if (!field.pokemon) return;
+      if (consultedPokemon.includes(field.pokemon)) return;
+
+      dispatch(F.POKEMONS.handleGetGenerationByName({ name: field.pokemon }));
+      setConsultedPokemon((prev) => [...prev, field.pokemon]);
+    });
+  }, [dispatch, selectedPokemon]);
+
   const submit = (data: IFormSchedule) => {
     alert(JSON.stringify(data));
+    setConsultedPokemon([]);
     setStatusCreateSchedule('success');
   };
 
@@ -202,9 +225,52 @@ export default function Schedule({
   };
 
   const handleSubTotal = () => {
-    const value = getValues('pokemonTeam');
-    const total = value ? value.length * 70.0 : 0;
-    return `R$ ${total.toFixed(2)}`;
+    const pokemons = handleFilterListPokemons();
+    const total = pokemons.length * 70.0;
+    return total;
+  };
+
+  const handleFilterListPokemons = () => {
+    const list = getValues('pokemonTeam');
+    const pokemons = list?.filter((item) => item.pokemon !== '');
+    return pokemons ?? [];
+  };
+
+  const handleCountPokemon = () => {
+    const pokemons = handleFilterListPokemons();
+    const total = pokemons.length;
+    return total === 0 ? String(0) : total.toString().padStart(2, '0');
+  };
+
+  function formatReal(value: number) {
+    const withDecimals = value.toFixed(2);
+    const formattedNumber = withDecimals.toString().replace('.', ',');
+    return formattedNumber.replace(/\B(?=(\d{3})+(?!\d))/g, '.');
+  }
+
+  const handleGenerationTax = () => {
+    if (highestGeneration.genInNumber === 0) return 0;
+    const generationTax = 0.03 * highestGeneration.genInNumber;
+    const generationTaxLimit = 0.3;
+
+    if (generationTax > generationTaxLimit) {
+      return generationTaxLimit;
+    }
+
+    return generationTax;
+  };
+
+  const handleTotal = () => {
+    const pokemons = handleFilterListPokemons();
+
+    if (!pokemons || pokemons.length === 0) return 0;
+
+    const total = pokemons.length * 70.0;
+    const generationTax = handleGenerationTax();
+    const totalGenerationTax = total * generationTax;
+    const totalWithGenerationTax = total + totalGenerationTax;
+
+    return totalWithGenerationTax;
   };
 
   return (
@@ -531,7 +597,7 @@ export default function Schedule({
               }}
             >
               <Text {...textStyles}>Número de pokémons a serem atendidos:</Text>
-              <Text {...textStyles}>{getValues('pokemonTeam')?.length}</Text>
+              <Text {...textStyles}>{handleCountPokemon()}</Text>
             </Container>
             <Container
               $styleProps={{
@@ -555,7 +621,9 @@ export default function Schedule({
               }}
             >
               <Text {...textStyles}>Subtotal:</Text>
-              <Text {...textStyles}>{handleSubTotal()}</Text>
+              <Text {...textStyles}>{`R$ ${formatReal(
+                handleSubTotal(),
+              )}`}</Text>
             </Container>
             <Container
               $styleProps={{
@@ -596,7 +664,7 @@ export default function Schedule({
                 },
               }}
             >
-              <Text>Valor Total: R$ 72,10</Text>
+              <Text>Valor Total: {`R$ ${formatReal(handleTotal())}`}</Text>
               <Button
                 $styleProps={{
                   width: { m: 21, d: 19 },
@@ -644,19 +712,19 @@ export const getServerSideProps: GetServerSideProps<{
   listRegion: Array<IResult>;
   listCity: Array<IResult>;
 }> = async () => {
-  const resDate = await SCHEDULE.schedule.getDate();
+  const resDate = await API.schedule.getDate();
   const listDate: Array<string> = resDate.data;
 
-  const resTime = await SCHEDULE.schedule.getTime();
+  const resTime = await API.schedule.getTime();
   const listTime: Array<string> = resTime.data;
 
-  const resPokemon = await SCHEDULE.schedule.getPokemons();
+  const resPokemon = await API.schedule.getPokemons();
   const dataPokemons: IApiPokemon = resPokemon.data;
 
-  const resRegion = await SCHEDULE.schedule.getRegion();
+  const resRegion = await API.schedule.getRegion();
   const dataRegion: IApiPokemon = resRegion.data;
 
-  const resCity = await SCHEDULE.schedule.getCity();
+  const resCity = await API.schedule.getCity();
   const dataCity: IApiPokemon = resCity.data;
 
   return {

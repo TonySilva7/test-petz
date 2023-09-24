@@ -1,5 +1,5 @@
-import { IUserState } from './user';
+import { IError } from './error';
 import { IStatusRequest } from './api';
 import { IStateStyles } from './styles';
 
-export type { IUserState, IStatusRequest, IStateStyles };
+export type { IError, IStatusRequest, IStateStyles };

@@ -1,3 +1,3 @@
-type IStatusRequest = 'idle' | 'loading' | 'success' | 'error';
+type IStatusRequest = 'idle' | 'pending' | 'success' | 'failed';
 
 export type { IStatusRequest };

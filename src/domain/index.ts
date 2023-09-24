@@ -1,3 +1,3 @@
-import { user, type IUser } from './users';
+import { generation, type IGeneration, type IPayload } from './generation';
 
-export { user, IUser };
+export { generation, IGeneration, IPayload };
