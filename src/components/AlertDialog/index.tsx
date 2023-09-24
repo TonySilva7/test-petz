@@ -31,6 +31,20 @@ function AlertDialog({ ...props }: AlertDialogProps) {
           padding: '2rem',
           gap: '1.5rem',
         },
+        m: {
+          display: 'flex',
+          'flex-direction': 'column',
+          border: `2px solid ${theme.colors.primary.medium}`,
+          'border-radius': '0.8rem',
+          height: '24.5rem',
+          'text-align': 'center',
+          'align-items': 'center',
+          'justify-content': 'center',
+          padding: '2rem',
+          gap: '1.5rem',
+
+          width: '37rem',
+        },
       }}
       {...props}
     >
@@ -43,7 +57,10 @@ function AlertDialog({ ...props }: AlertDialogProps) {
       <Text fontSize={1.4} fontWeight={400} color={theme.colors.gray.medium}>
         {message}
       </Text>
-      <Button onClick={callback} $styleProps={{ width: { m: 20, d: 20 } }}>
+      <Button
+        onClick={callback}
+        $styleProps={{ size: { m: 1.2, d: 1.4 }, width: { m: 20, d: 20 } }}
+      >
         Fazer Novo Agendamento
       </Button>
     </Container>

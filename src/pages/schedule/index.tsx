@@ -1,6 +1,6 @@
+import * as F from '@/@redux/features';
 import { STYLES } from '@/@redux/features';
 import * as S from '@/@redux/store';
-import * as F from '@/@redux/features';
 import * as API from '@/api';
 import { AlertDialog } from '@/components/AlertDialog';
 import { Button } from '@/components/Button';
@@ -9,14 +9,15 @@ import { IStylesProps } from '@/components/Container/styles';
 import { Divider } from '@/components/Divider';
 import * as Fields from '@/components/Fields';
 import { Form } from '@/components/Form';
+import { IconError } from '@/components/IconError';
 import { IconSuccess } from '@/components/IconSuccess';
 import * as Input from '@/components/Input';
 import * as Select from '@/components/Select';
 import { Text } from '@/components/Text';
 import { yupResolver } from '@hookform/resolvers/yup';
 import { GetServerSideProps, InferGetServerSidePropsType } from 'next';
-import { ComponentProps, use, useEffect, useState } from 'react';
-import { set, useFieldArray, useForm, useWatch } from 'react-hook-form';
+import { ComponentProps, useEffect, useState } from 'react';
+import { useFieldArray, useForm, useWatch } from 'react-hook-form';
 import { useTheme } from 'styled-components';
 import * as Yup from 'yup';
 
@@ -71,7 +72,6 @@ export default function Schedule({
     handleSubmit,
     getValues,
     setValue,
-    watch,
     control,
     formState: { errors },
   } = useForm<IFormSchedule>({
@@ -118,12 +118,17 @@ export default function Schedule({
       dispatch(F.POKEMONS.handleGetGenerationByName({ name: field.pokemon }));
       setConsultedPokemon((prev) => [...prev, field.pokemon]);
     });
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [dispatch, selectedPokemon]);
 
   const submit = (data: IFormSchedule) => {
-    alert(JSON.stringify(data));
-    setConsultedPokemon([]);
-    setStatusCreateSchedule('success');
+    return new Promise((resolve) => {
+      setTimeout(() => {
+        resolve(data);
+        setConsultedPokemon([]);
+        setStatusCreateSchedule('success');
+      }, 2000);
+    });
   };
 
   const hasErrors = (keyError: keyof IFormSchedule) => {
@@ -678,13 +683,21 @@ export default function Schedule({
         </>
       ) : (
         <AlertDialog
-          title="Consulta Agendada"
-          icon={IconSuccess}
-          message={`Seu agendamento para dia ${getValues(
-            'schedulingDate',
-          )}, às ${getValues('schedulingTime')},
-          para ${getValues('pokemonTeam')
-            ?.length} pokémons foi realizado com sucesso!`}
+          title={
+            statusCreateSchedule === 'success'
+              ? 'Consulta Agendada'
+              : 'Houve um problema no agendamento'
+          }
+          icon={statusCreateSchedule === 'success' ? IconSuccess : IconError}
+          message={
+            statusCreateSchedule === 'success'
+              ? `Seu agendamento para dia ${getValues(
+                  'schedulingDate',
+                )}, às ${getValues('schedulingTime')},
+            para ${getValues('pokemonTeam')
+              ?.length} pokémons foi realizado com sucesso!`
+              : '//TODO: definir mensagem'
+          }
           callback={handleNewScheduling}
         />
       )}

@@ -1,8 +1,10 @@
 import React, { ComponentProps } from 'react';
 
-type PokeBallProps = ComponentProps<'svg'>;
+type IconPokeBallProps = ComponentProps<'svg'>;
 
-const PokeBall: React.FC<PokeBallProps | undefined> = ({ ...props }) => {
+const IconPokeBall: React.FC<IconPokeBallProps | undefined> = ({
+  ...props
+}) => {
   return (
     <svg
       width="37"
@@ -20,4 +22,4 @@ const PokeBall: React.FC<PokeBallProps | undefined> = ({ ...props }) => {
   );
 };
 
-export { PokeBall, type PokeBallProps };
+export { IconPokeBall, type IconPokeBallProps };

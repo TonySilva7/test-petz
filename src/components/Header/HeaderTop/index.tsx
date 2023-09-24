@@ -1,7 +1,7 @@
 import { STYLES } from '@/@redux/features';
 import * as S from '@/@redux/store';
 import { Button } from '@/components/Button';
-import { PokeBall } from '@/components/PokeBall';
+import { IconPokeBall } from '@/components/IconPokeBall';
 import { ComponentProps } from 'react';
 import { HeaderTopWrapper } from './styles';
 import { ButtonWrapperProps } from '@/components/Button/styles';
@@ -31,7 +31,7 @@ function HeaderTop({ ...props }: HeaderTopProps) {
     <HeaderTopWrapper aria-label="header parte um" {...props}>
       <div>
         <Button
-          iconPrefix={PokeBall}
+          iconPrefix={IconPokeBall}
           $styleProps={{ ...primaryButton, isLoading: isLoadingHome }}
           onClick={handleNavigate}
         >
