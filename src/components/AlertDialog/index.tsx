@@ -1,9 +1,8 @@
-import { ComponentProps, ElementType, ReactElement } from 'react';
-import { Container } from '../Container';
+import { ComponentProps, ElementType } from 'react';
 import { useTheme } from 'styled-components';
-import { Text } from '../Text';
-import { IconSuccess } from '../IconSuccess';
 import { Button } from '../Button';
+import { Container } from '../Container';
+import { Text } from '../Text';
 
 type AlertDialogProps = ComponentProps<'div'> & {
   title: string;

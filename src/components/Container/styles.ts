@@ -29,12 +29,12 @@ type IMainStyles = {
   border?: string;
 };
 
-export type IStylesProps = {
+type IStylesProps = {
   m?: IMainStyles;
   d?: IMainStyles;
 };
 
-export type ContainerWrapperProps = ComponentProps<'div'> & {
+type ContainerWrapperProps = ComponentProps<'div'> & {
   $styleProps?: IStylesProps;
 };
 
@@ -53,3 +53,5 @@ export const ContainerWrapper = styled.div<ContainerWrapperProps>`
     ${({ $styleProps }) => $styleProps?.d && handleToCSS($styleProps?.d)};
   }
 `;
+
+export type { IMainStyles, IStylesProps, ContainerWrapperProps };
