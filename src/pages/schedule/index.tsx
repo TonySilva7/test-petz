@@ -21,6 +21,7 @@ import { useFieldArray, useForm, useWatch } from 'react-hook-form';
 import { useTheme } from 'styled-components';
 import * as Yup from 'yup';
 import * as Button from '@/components/Button';
+import { useValidationForm } from '@/hooks/useValidationForm';
 
 type HomeProps = ComponentProps<'main'> &
   InferGetServerSidePropsType<typeof getServerSideProps>;
@@ -50,23 +51,7 @@ export default function Schedule({
   const dispatch = S.useAppDispatch();
   const { highestGeneration } = S.useAppSelector(F.POKEMONS.selectPokemons);
 
-  const fnSchema = () => {
-    return Yup.object({
-      firstName: Yup.string().required(`Nome é obrigatório`),
-      lastName: Yup.string().required(`Sobrenome é obrigatório`),
-      region: Yup.string().required(`Região é obrigatório`),
-      city: Yup.string().required(`Cidade é obrigatório`),
-
-      pokemonTeam: Yup.array().of(
-        Yup.object().shape({
-          pokemon: Yup.string().required('Pokémon é obrigatório'),
-        }),
-      ),
-
-      schedulingDate: Yup.string().required(`Data é obrigatório`),
-      schedulingTime: Yup.string().required(`Hora é obrigatório`),
-    }).required();
-  };
+  const schema = useValidationForm();
 
   const {
     register,
@@ -76,7 +61,7 @@ export default function Schedule({
     control,
     formState: { errors },
   } = useForm<IFormSchedule>({
-    resolver: yupResolver(fnSchema()),
+    resolver: yupResolver(schema),
     defaultValues: {
       firstName: '',
       lastName: '',
