@@ -1,6 +1,6 @@
-import { IGeneration, IPayload } from './protocol';
+import { IGenerationState, IPayload } from './protocol';
 
-const generation: IGeneration = {
+const generation: IGenerationState = {
   name: '',
   url: '',
   highestGeneration: {
@@ -13,4 +13,4 @@ const generation: IGeneration = {
   statusCode: 0,
 };
 
-export { generation, type IGeneration, type IPayload };
+export { generation, type IGenerationState, type IPayload };

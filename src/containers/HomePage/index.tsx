@@ -1,15 +1,23 @@
 import { ComponentProps } from 'react';
 import { HomePageWrapper } from './styles';
+import { Text } from '@/components/Text';
+import { useTheme } from 'styled-components';
 
 type HomePageProps = ComponentProps<'div'>;
 
 function HomePage({ ...props }: HomePageProps) {
+  const theme = useTheme();
   return (
     <HomePageWrapper {...props}>
-      <p>
+      <Text
+        fontSize={3.2}
+        fontWeight={700}
+        $textAlign="right"
+        color={theme.colors.secondary}
+      >
         Cuidamos bem do seu pokémon,
         <br /> para ele cuidar bem de você
-      </p>
+      </Text>
     </HomePageWrapper>
   );
 }

@@ -10,10 +10,4 @@ export const HomePageWrapper = styled.div`
   align-items: center;
   width: 100%;
   color: ${({ theme }) => theme.colors.white};
-
-  & > p {
-    font-size: 3.2rem;
-    font-weight: 700;
-    text-align: center;
-  }
 `;

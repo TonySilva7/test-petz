@@ -1,3 +1,14 @@
 type IStatusRequest = 'idle' | 'pending' | 'success' | 'failed';
+type IResult = {
+  name: string;
+  url: string;
+};
 
-export type { IStatusRequest };
+type IApiPokemon<T extends IResult> = {
+  count: number;
+  next: string;
+  previous: string | null;
+  results: Array<T>;
+};
+
+export type { IStatusRequest, IResult, IApiPokemon };

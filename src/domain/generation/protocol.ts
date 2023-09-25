@@ -1,12 +1,11 @@
 import * as TYPE from '@/@types';
-type IItemGeneration = {
-  name: string;
-  url: string;
-};
-type IGeneration = IItemGeneration & {
+type IGeneration = TYPE.IResult;
+
+type IGenerationState = IGeneration & {
   statusRequest: TYPE.IStatusRequest;
   statusCode: number;
-  highestGeneration: IItemGeneration & {
+
+  highestGeneration: IGeneration & {
     genInNumber: number;
     pokemonName: string;
   };
@@ -16,4 +15,4 @@ type IPayload = {
   name: string;
 };
 
-export type { IGeneration, IPayload };
+export type { IGenerationState, IPayload };

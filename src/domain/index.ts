@@ -1,3 +1,13 @@
-import { generation, type IGeneration, type IPayload } from './generation';
+import { generation, type IGenerationState, type IPayload } from './generation';
+import type { IPokemon } from './pokemon';
+import type { IRegion } from './region';
+import type { ICity } from './city';
 
-export { generation, IGeneration, IPayload };
+export {
+  generation,
+  IGenerationState as IGeneration,
+  IPayload,
+  IPokemon,
+  IRegion,
+  ICity,
+};
