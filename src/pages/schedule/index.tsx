@@ -3,7 +3,7 @@ import { STYLES } from '@/@redux/features';
 import * as S from '@/@redux/store';
 import * as API from '@/api';
 import { AlertDialog } from '@/components/AlertDialog';
-import { Button } from '@/components/Button';
+import { Root } from '@/components/Button';
 import { Container } from '@/components/Container';
 import { IStylesProps } from '@/components/Container/styles';
 import { Divider } from '@/components/Divider';
@@ -20,6 +20,7 @@ import { ComponentProps, useEffect, useState } from 'react';
 import { useFieldArray, useForm, useWatch } from 'react-hook-form';
 import { useTheme } from 'styled-components';
 import * as Yup from 'yup';
+import * as Button from '@/components/Button';
 
 type HomeProps = ComponentProps<'main'> &
   InferGetServerSidePropsType<typeof getServerSideProps>;
@@ -497,24 +498,26 @@ export default function Schedule({
                         ))}
                       </Select.Control>
                     </Container>
-                    <Button
+                    <Button.Root
                       type="button"
                       $styleProps={{
-                        width: { m: 3, d: 3 },
-                        height: { m: 3, d: 3 },
-                        isTransparent: true,
+                        d: {
+                          'font-size': '2rem',
+                          background: 'transparent',
+                          margin: '0 0 0 0.5rem',
+                        },
                       }}
                       onClick={() => remove(index)}
                     >
-                      <Text
+                      {/* <Text
                         as="p"
                         fontSize={2}
                         fontWeight={500}
                         color={theme.colors.lightBlack}
-                      >
-                        &times;
-                      </Text>
-                    </Button>
+                      > */}
+                      &times;
+                      {/* </Text> */}
+                    </Button.Root>
                   </Container>
 
                   {hasErrors(
@@ -529,14 +532,32 @@ export default function Schedule({
                 </Fields.Root>
               ))}
 
-              <Button
+              <Button.Root
                 type="button"
-                $styleProps={{ width: { m: 30, d: 28 }, isTransparent: true }}
-                style={{ border: 'solid 1px #1D1D1D' }}
+                $styleProps={{
+                  d: {
+                    width: '25.3rem',
+                    height: '4.2rem',
+                    'border-radius': '20rem',
+                    border: `solid 1px ${theme.colors.lightBlack}`,
+                    background: 'transparent',
+                    'font-weight': 700,
+                    'font-size': '1.2rem',
+                  },
+                  m: {
+                    width: '25.3rem',
+                    height: '4.2rem',
+                    'border-radius': '20rem',
+                    border: `solid 1px ${theme.colors.lightBlack}`,
+                    background: 'transparent',
+                    'font-weight': 700,
+                    'font-size': '1.2rem',
+                  },
+                }}
                 onClick={handleAddFields}
               >
                 Adicionar novo pokémon ao time... +
-              </Button>
+              </Button.Root>
             </Container>
 
             <Container $styleProps={containerStyles}>
@@ -670,14 +691,31 @@ export default function Schedule({
               }}
             >
               <Text>Valor Total: {`R$ ${formatReal(handleTotal())}`}</Text>
-              <Button
+              <Root
                 $styleProps={{
-                  width: { m: 21, d: 19 },
+                  d: {
+                    width: '18.3rem',
+                    height: '4.2rem',
+                    'border-radius': '20rem',
+                    background: theme.colors.primary.dark,
+                    color: theme.colors.secondary,
+                    'font-weight': 700,
+                    'font-size': '1.4rem',
+                  },
+                  m: {
+                    height: '4.2rem',
+                    width: '21rem',
+                    'border-radius': '20rem',
+                    background: theme.colors.primary.dark,
+                    color: theme.colors.secondary,
+                    'font-weight': 700,
+                    'font-size': '1.4rem',
+                  },
                 }}
                 type="submit"
               >
                 Concluir Agendamento
-              </Button>
+              </Root>
             </Container>
           </Form>
         </>

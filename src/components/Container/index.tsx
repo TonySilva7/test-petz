@@ -1,13 +1,23 @@
-import { HTMLAttributes } from 'react';
+import { ComponentWrapperProps } from '@/@types/styles';
 import { StyledTarget } from 'styled-components/dist/types';
-import { ContainerWrapper, IStylesProps } from './styles';
+import { ContainerWrapper } from './styles';
+import { JSXElementConstructor } from 'react';
 
-type ContainerProps = HTMLAttributes<HTMLDivElement> & {
-  as?: StyledTarget<'web'>;
-  $styleProps?: IStylesProps;
-};
+// eslint-disable-next-line @typescript-eslint/no-explicit-any
+type JSXConst = JSXElementConstructor<any>;
+type JSXEle = JSX.IntrinsicElements;
 
-function Container({ children, as, $styleProps, ...props }: ContainerProps) {
+type ContainerProps<T extends keyof JSXEle | JSXConst> =
+  ComponentWrapperProps<T> & {
+    as?: StyledTarget<'web'>;
+  };
+
+function Container<T extends keyof JSXEle | JSXConst>({
+  children,
+  as,
+  $styleProps,
+  ...props
+}: ContainerProps<T>) {
   return (
     <ContainerWrapper as={as} $styleProps={$styleProps} {...props}>
       {children}

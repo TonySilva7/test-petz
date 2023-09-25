@@ -1,22 +1,23 @@
-import React, { ElementType } from 'react';
-import { ButtonWrapper, ButtonWrapperProps } from './styles';
+import { ComponentWrapperProps } from '@/@types/styles';
+import { ButtonWrapper, PrefixWrapper, PrefixWrapperProps } from './styles';
 
-type ButtonProps = ButtonWrapperProps & {
-  iconPrefix?: ElementType;
-};
+type PrefixProps = PrefixWrapperProps;
+type ButtonProps = ComponentWrapperProps<'button'>;
 
-function Button({
-  children,
-  $styleProps,
-  iconPrefix: Icon,
-  ...rest
-}: ButtonProps) {
+function Root({ children, $styleProps, ...rest }: ButtonProps) {
   return (
     <ButtonWrapper $styleProps={$styleProps} {...rest}>
-      <span>{Icon && <Icon />}</span>
-      <span>{children}</span>
+      {children}
     </ButtonWrapper>
   );
 }
 
-export { Button, type ButtonProps };
+function Prefix({ children, $styleProps, $isLoading, ...props }: PrefixProps) {
+  return (
+    <PrefixWrapper $styleProps={$styleProps} $isLoading={$isLoading} {...props}>
+      {children}
+    </PrefixWrapper>
+  );
+}
+
+export { Root, Prefix, type ButtonProps, type PrefixProps };

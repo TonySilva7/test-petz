@@ -1,6 +1,6 @@
 import { ComponentProps, ElementType } from 'react';
 import { useTheme } from 'styled-components';
-import { Button } from '../Button';
+import { Root } from '../Button';
 import { Container } from '../Container';
 import { Text } from '../Text';
 
@@ -56,12 +56,12 @@ function AlertDialog({ ...props }: AlertDialogProps) {
       <Text fontSize={1.4} fontWeight={400} color={theme.colors.gray.medium}>
         {message}
       </Text>
-      <Button
+      <Root
         onClick={callback}
         $styleProps={{ size: { m: 1.2, d: 1.4 }, width: { m: 20, d: 20 } }}
       >
         Fazer Novo Agendamento
-      </Button>
+      </Root>
     </Container>
   );
 }

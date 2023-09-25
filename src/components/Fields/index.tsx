@@ -1,13 +1,13 @@
-import { ComponentProps, HTMLAttributes } from 'react';
-import { ContainerWrapperProps } from '../Container/styles';
+import { ComponentProps } from 'react';
 import {
   ErrorsWrapper,
   LegendWrapper,
   LegendWrapperProps,
   RootWrapper,
 } from './styles';
+import { ComponentWrapperProps } from '@/@types/styles';
 
-type RootProps = HTMLAttributes<HTMLDivElement> & ContainerWrapperProps;
+type RootProps = ComponentWrapperProps<'div'>;
 type LegendProps = ComponentProps<'label'> & LegendWrapperProps;
 type ErrorsProps = ComponentProps<'ul'> & {
   errors: Array<string | undefined>;

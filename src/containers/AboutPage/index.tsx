@@ -31,7 +31,6 @@ function Sections({ ...props }: SectionsProps) {
     <Container
       as="article"
       $styleProps={{
-        d: articleStyle,
         m: articleStyle,
       }}
       {...props}
@@ -135,7 +134,6 @@ function SectionItem({ title, text }: { title: string; text: string }) {
       as="section"
       $styleProps={{
         m: sectionStyle,
-        d: sectionStyle,
       }}
     >
       <Text as="h3" {...h3Styles}>
@@ -154,14 +152,10 @@ function Root({ children, ...props }: RootProps) {
   return (
     <Container
       as="main"
-      {...props}
       $styleProps={{
         d: {
-          display: 'flex',
-          'flex-direction': 'column',
           width: '33%',
           padding: '4rem 0',
-          gap: '1.5rem',
         },
         m: {
           display: 'flex',
@@ -170,6 +164,7 @@ function Root({ children, ...props }: RootProps) {
           padding: '4rem 1rem',
         },
       }}
+      {...props}
     >
       {children}
     </Container>
