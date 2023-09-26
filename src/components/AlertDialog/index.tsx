@@ -10,6 +10,7 @@ type AlertDialogProps = ComponentProps<'div'> & {
   icon: ElementType;
   message: string;
   callback: () => void;
+  titleButton?: string;
 };
 
 function AlertDialog({
@@ -17,6 +18,7 @@ function AlertDialog({
   icon: Icon,
   message,
   callback,
+  titleButton = 'Fazer Novo Agendamento',
   ...props
 }: AlertDialogProps) {
   const theme = useTheme();
@@ -33,7 +35,7 @@ function AlertDialog({
         {message}
       </Text>
       <Button.Root onClick={callback} $styleProps={buttonStyle}>
-        Fazer Novo Agendamento
+        {titleButton}
       </Button.Root>
     </Container>
   );

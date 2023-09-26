@@ -21,6 +21,9 @@ import {
   textStyles,
 } from '../styles';
 import { ICity, IPokemon, IRegion } from '@/domain';
+import { AlertDialog } from '@/components/AlertDialog';
+import { IconError } from '@/components/IconError';
+import { useRouter } from 'next/router';
 
 export function SessionInfoCustomer({
   errors,
@@ -436,6 +439,41 @@ export function SessionTotal({ handleTotal }: SessionTotalProps) {
       >
         Concluir Agendamento
       </Button.Root>
+    </Container>
+  );
+}
+
+export function RedirectCard({
+  error,
+  title,
+}: {
+  error: string;
+  title?: string;
+}) {
+  // create navigate home
+  const navigate = useRouter();
+  const handleNavigateHome = () => {
+    navigate.push('/');
+  };
+
+  return (
+    <Container
+      $styleProps={{
+        m: {
+          'min-height': 'calc(100vh - 33.6rem)',
+          display: 'flex',
+          'justify-content': 'center',
+          'align-items': 'center',
+        },
+      }}
+    >
+      <AlertDialog
+        title="Ocorreu um erro!"
+        icon={IconError}
+        callback={handleNavigateHome}
+        message={error}
+        titleButton={title}
+      />
     </Container>
   );
 }
