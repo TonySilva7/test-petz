@@ -14,7 +14,6 @@ export default function Schedule({
   listPokemon,
   listRegion,
   listCity,
-  ...props
 }: HomeProps) {
   return (
     <SchedulePage
@@ -23,27 +22,16 @@ export default function Schedule({
       listPokemon={listPokemon}
       listRegion={listRegion}
       listCity={listCity}
-      {...props}
     />
   );
 }
 
-// type IResult = {
-//   name: string;
-//   url: string;
-// };
-// type IApiPokemon = {
-//   count: number;
-//   next: string;
-//   previous: string | null;
-//   results: Array<IResult>;
-// };
 export const getServerSideProps: GetServerSideProps<{
   listDate: Array<string>;
   listTime: Array<string>;
-  listPokemon: Array<TYPE.IResult>;
-  listRegion: Array<TYPE.IResult>;
-  listCity: Array<TYPE.IResult>;
+  listPokemon: Array<IPokemon>;
+  listRegion: Array<IRegion>;
+  listCity: Array<ICity>;
 }> = async () => {
   const resDate = await API.schedule.getDate();
   const listDate: Array<string> = resDate.data;

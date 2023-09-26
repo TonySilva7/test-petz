@@ -30,17 +30,3 @@ export default function Home() {
     </>
   );
 }
-
-// export const getServerSideProps = S.wrapper.getServerSideProps(
-//   (store) =>
-//     async ({ resolvedUrl }) => {
-//       const { dispatch } = store;
-
-//       dispatch(setProfileData('Tony Hello'));
-//       dispatch(setAge({ age: 42 }));
-
-//       return {
-//         props: { resolvedUrl },
-//       };
-//     },
-// );
