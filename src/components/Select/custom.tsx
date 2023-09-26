@@ -55,24 +55,6 @@ const CustomSelect: ForwardRefRenderFunction<
     null,
   );
 
-  // useEffect(() => {
-  //   const handleOutsideClick = (event: MouseEvent) => {
-  //     if (
-  //       selectRef &&
-  //       selectRef.current &&
-  //       !selectRef.current.contains(event.target as Node)
-  //     ) {
-  //       setIsOpen(false);
-  //     }
-  //   };
-
-  //   document.addEventListener('mousedown', handleOutsideClick);
-
-  //   return () => {
-  //     document.removeEventListener('mousedown', handleOutsideClick);
-  //   };
-  // }, [selectRef]);
-
   const toggleSelect = () => {
     setIsOpen(!isOpen);
   };
