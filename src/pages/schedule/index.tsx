@@ -1,14 +1,10 @@
-import * as API from '@/api';
 import * as TYPE from '@/@types';
+import * as API from '@/api';
 import SchedulePage from '@/containers/SchedulePage';
+import { RedirectCard } from '@/containers/SchedulePage/form';
+import { ICity, IPokemon, IRegion } from '@/domain';
 import { GetServerSideProps, InferGetServerSidePropsType } from 'next';
 import { ComponentProps } from 'react';
-import { ICity, IPokemon, IRegion } from '@/domain';
-import { Text } from '@/components/Text';
-import { AlertDialog } from '@/components/AlertDialog';
-import { IconError } from '@/components/IconError';
-import { Container } from '@/components/Container';
-import { RedirectCard } from '@/containers/SchedulePage/form';
 
 type HomeProps = ComponentProps<'main'> &
   InferGetServerSidePropsType<typeof getServerSideProps>;

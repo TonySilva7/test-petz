@@ -105,7 +105,12 @@ function Sections({ ...props }: SectionsProps) {
 
 function MainTitle({ ...props }: MainTitleProps) {
   return (
-    <Text fontSize={1.8} fontWeight={600} {...props}>
+    <Text
+      data-testid="about-page-title"
+      fontSize={1.8}
+      fontWeight={600}
+      {...props}
+    >
       O Centro Pokémon
     </Text>
   );

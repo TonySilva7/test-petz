@@ -30,6 +30,7 @@ function HeaderTop({ ...props }: HeaderTopProps) {
       {...props}
     >
       <Button.Root
+        data-testid="main-home-button"
         $styleProps={{
           m: {
             display: 'flex',

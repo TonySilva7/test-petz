@@ -14,6 +14,7 @@ function HomePage({ ...props }: HomePageProps) {
         fontWeight={700}
         $textAlign="right"
         color={theme.colors.secondary}
+        data-testid="home-page-title"
       >
         Cuidamos bem do seu pokémon,
         <br /> para ele cuidar bem de você

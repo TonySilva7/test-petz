@@ -421,6 +421,7 @@ export function SessionTotal({ handleTotal }: SessionTotalProps) {
     >
       <Text>Valor Total: {`R$ ${formatReal(handleTotal())}`}</Text>
       <Button.Root
+        data-testid="submit-schedule-button"
         $styleProps={{
           d: {
             width: '18.3rem',

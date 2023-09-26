@@ -10,7 +10,7 @@ const initialState: T.IStateStyles = {
   },
 };
 
-export const userSlice = createSlice({
+export const styleSlice = createSlice({
   name: 'styles',
   initialState,
 
@@ -32,9 +32,9 @@ export const userSlice = createSlice({
   },
 });
 
-export const { shrinkHomeButton, setTitleHeader } = userSlice.actions;
+export const { shrinkHomeButton, setTitleHeader } = styleSlice.actions;
 
 export const selectStyles = (state: RootState): T.IStateStyles =>
   state.stylesReducer;
 
-export default userSlice.reducer;
+export default styleSlice.reducer;

@@ -1,11 +1,10 @@
 // As a basic setup, import your same slice reducers
-import type { PreloadedState } from '@reduxjs/toolkit';
 import type { RenderOptions } from '@testing-library/react';
 import { render } from '@testing-library/react';
 import React, { PropsWithChildren } from 'react';
 import { Provider } from 'react-redux';
 
-import { makeStore, type AppStore, type RootState } from '@/@redux/store';
+import { makeStore, type AppStore } from '@/@redux/store';
 import { GlobalStyle } from '@/styles/GlobalStyle';
 import { theme } from '@/styles/theme';
 import { ThemeProvider } from 'styled-components';
