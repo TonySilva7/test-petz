@@ -18,7 +18,6 @@ import { yupResolver } from '@hookform/resolvers/yup';
 import { InferGetServerSidePropsType } from 'next';
 import { ComponentProps, useEffect, useState } from 'react';
 import { useFieldArray, useForm, useWatch } from 'react-hook-form';
-import { useTheme } from 'styled-components';
 import {
   SessionDateTimeSchedule,
   SessionInfoCustomer,
@@ -47,7 +46,6 @@ export default function SchedulePage({
   const { highestGeneration } = S.useAppSelector(F.POKEMONS.selectPokemons);
   const schema = useValidationForm();
   const [consultedPokemon, setConsultedPokemon] = useState<string[]>([]);
-  const theme = useTheme();
 
   const {
     register,
