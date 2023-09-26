@@ -70,7 +70,6 @@ const createAxiosInstance = (baseURL: string): AxiosInstance => {
   return instance;
 };
 
-// const apiLocalBaseUrl = 'http://localhost:3000/api/scheduling';
 const apiLocalBaseUrl = process.env.API_URL_LOCAL as string;
 const apiPokemonBaseUrl = process.env.API_URL_POKEMON as string;
 

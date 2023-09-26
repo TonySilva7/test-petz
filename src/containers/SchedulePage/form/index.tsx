@@ -451,7 +451,6 @@ export function RedirectCard({
   error: string;
   title?: string;
 }) {
-  // create navigate home
   const navigate = useRouter();
   const handleNavigateHome = () => {
     navigate.push('/');
