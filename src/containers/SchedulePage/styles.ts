@@ -39,8 +39,7 @@ const resumeScheduleStyles: IStylesProps = {
     'justify-content': 'space-between',
   },
   d: {
-    display: 'flex',
-    'justify-content': 'space-between',
+    'flex-direction': 'row',
   },
 };
 

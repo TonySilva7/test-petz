@@ -1,6 +1,3 @@
-// import { selectStyles } from '@/@redux/features/styles';
-import { IResult } from '@/@types';
-import { Root } from '@/components/Button';
 import { Container } from '@/components/Container';
 import { theme } from '@/styles/theme';
 import { formatReal } from '@/utils';
@@ -23,6 +20,7 @@ import {
   resumeScheduleStyles,
   textStyles,
 } from '../styles';
+import { ICity, IPokemon, IRegion } from '@/domain';
 
 export function SessionInfoCustomer({
   errors,
@@ -71,7 +69,7 @@ export function SessionInfoCustomer({
             <Select.Option id="default" value="" disabled>
               Selecione sua região
             </Select.Option>
-            {listRegion.map((region: IResult) => (
+            {listRegion.map((region: IRegion) => (
               <Select.Option value={region.name} key={region.name}>
                 {handleName(region.name)}
               </Select.Option>
@@ -93,7 +91,7 @@ export function SessionInfoCustomer({
             <Select.Option id="default" value="" disabled>
               Selecione sua cidade
             </Select.Option>
-            {listCity.map((city: IResult) => (
+            {listCity.map((city: ICity) => (
               <Select.Option value={city.name} key={city.name}>
                 {handleName(city.name)}
               </Select.Option>
@@ -133,15 +131,13 @@ export function SessionInfoPokemonTeam({
     >
       <Container
         $styleProps={{
-          d: {
-            display: 'flex',
-            'flex-direction': 'column',
-            gap: '1rem 0',
-          },
           m: {
             display: 'flex',
             'flex-direction': 'column',
             gap: '1rem 0',
+          },
+          d: {
+            width: '100%',
           },
         }}
       >
@@ -163,11 +159,8 @@ export function SessionInfoPokemonTeam({
           $styleProps={{
             ...selectStyles,
             d: {
-              display: 'flex',
-              'flex-direction': 'column',
               flex: '1 1 100%',
               'justify-content': 'center',
-              gap: '1rem',
             },
             m: {
               display: 'flex',
@@ -181,7 +174,6 @@ export function SessionInfoPokemonTeam({
             $styleProps={{
               d: {
                 display: 'flex',
-                'align-items': 'center',
               },
               m: {
                 display: 'inline-flex',
@@ -194,9 +186,8 @@ export function SessionInfoPokemonTeam({
             <Container
               $styleProps={{
                 d: {
-                  display: 'flex',
-                  flex: '1 1 auto',
                   'align-items': 'center',
+                  'flex-direction': 'row',
                 },
                 m: {
                   display: 'flex',
@@ -222,7 +213,7 @@ export function SessionInfoPokemonTeam({
                 <Select.Option id="default" value="" disabled>
                   Selecione seu pokémon
                 </Select.Option>
-                {listPokemon.map((pokemon: IResult) => (
+                {listPokemon.map((pokemon: IPokemon) => (
                   <Select.Option value={pokemon.name} key={pokemon.name}>
                     {handleName(pokemon.name)}
                   </Select.Option>
@@ -232,9 +223,12 @@ export function SessionInfoPokemonTeam({
             <Button.Root
               type="button"
               $styleProps={{
-                d: {
+                m: {
                   'font-size': '2rem',
                   background: 'transparent',
+                  margin: '2rem 0 0 0.5rem',
+                },
+                d: {
                   margin: '0 0 0 0.5rem',
                 },
               }}
@@ -257,15 +251,6 @@ export function SessionInfoPokemonTeam({
       <Button.Root
         type="button"
         $styleProps={{
-          d: {
-            width: '25.3rem',
-            height: '4.2rem',
-            'border-radius': '20rem',
-            border: `solid 1px ${theme.colors.lightBlack}`,
-            background: 'transparent',
-            'font-weight': 700,
-            'font-size': '1.2rem',
-          },
           m: {
             width: '25.3rem',
             height: '4.2rem',
@@ -360,8 +345,10 @@ export function SessionResumeSchedule({
           },
         }}
       >
-        <Text {...textStyles}>Número de pokémons a serem atendidos:</Text>
-        <Text {...textStyles}>{handleCountPokemon()}</Text>
+        <Text {...textStyles(theme)}>
+          Número de pokémons a serem atendidos:
+        </Text>
+        <Text {...textStyles(theme)}>{handleCountPokemon()}</Text>
       </Container>
       <Container
         $styleProps={{
@@ -372,8 +359,8 @@ export function SessionResumeSchedule({
           },
         }}
       >
-        <Text {...textStyles}>Atendimento unitário por pokémon:</Text>
-        <Text {...textStyles}>R$ 70,00</Text>
+        <Text {...textStyles(theme)}>Atendimento unitário por pokémon:</Text>
+        <Text {...textStyles(theme)}>R$ 70,00</Text>
       </Container>
       <Container
         $styleProps={{
@@ -384,8 +371,10 @@ export function SessionResumeSchedule({
           },
         }}
       >
-        <Text {...textStyles}>Subtotal:</Text>
-        <Text {...textStyles}>{`R$ ${formatReal(handleSubTotal())}`}</Text>
+        <Text {...textStyles(theme)}>Subtotal:</Text>
+        <Text {...textStyles(theme)}>{`R$ ${formatReal(
+          handleSubTotal(),
+        )}`}</Text>
       </Container>
       <Container
         $styleProps={{
@@ -396,8 +385,8 @@ export function SessionResumeSchedule({
           },
         }}
       >
-        <Text {...textStyles}>Taxa geracional*:</Text>
-        <Text {...textStyles}>R$ 2,10</Text>
+        <Text {...textStyles(theme)}>Taxa geracional*:</Text>
+        <Text {...textStyles(theme)}>R$ 2,10</Text>
       </Container>
       <Container
         $styleProps={{
@@ -428,16 +417,10 @@ export function SessionTotal({ handleTotal }: SessionTotalProps) {
       }}
     >
       <Text>Valor Total: {`R$ ${formatReal(handleTotal())}`}</Text>
-      <Root
+      <Button.Root
         $styleProps={{
           d: {
             width: '18.3rem',
-            height: '4.2rem',
-            'border-radius': '20rem',
-            background: theme.colors.primary.dark,
-            color: theme.colors.secondary,
-            'font-weight': 700,
-            'font-size': '1.4rem',
           },
           m: {
             height: '4.2rem',
@@ -452,7 +435,7 @@ export function SessionTotal({ handleTotal }: SessionTotalProps) {
         type="submit"
       >
         Concluir Agendamento
-      </Root>
+      </Button.Root>
     </Container>
   );
 }
